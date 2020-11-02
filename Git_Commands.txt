@@ -27,3 +27,4 @@ to get specific files from one branch to other:
     git checkout <name of other branch> <path of where is the file>
 
     3. commit the changes and done
+AS
