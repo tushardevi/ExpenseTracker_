@@ -16,3 +16,14 @@ git checkout <name of branch> (to open a branch)
 
 to merge a branch back to master branch
 (in master branch) git merge <name of branch>
+
+
+to get specific files from one branch to other:
+
+    1.go to the branch where you want to add the file
+    git branch <name>
+
+    2. then add the file you want to add
+    git checkout <name of other branch> <path of where is the file>
+
+    3. commit the changes and done
