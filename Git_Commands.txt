@@ -29,7 +29,7 @@ to get specific files from one branch to other:
     3. commit the changes and done
 
 
-(HOW TO USE VERSION CONTROL) Version 1
+(HOW TO USE VERSION CONTROL) Version master
 --------------------------------------------------------
 1.When you have partially finished a stage in project then just commit those files in master and close codio 
 (or u can just close without commiting)
