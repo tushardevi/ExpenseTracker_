@@ -1,0 +1,18 @@
+git status to see which file are commited
+git add . (replace . with file names to add specific files)
+git commit -m (commit the changes -m to leave a message)
+
+git rm -- cached <filename> (to delete files)
+git commit (to comit the changes)
+
+
+branches:
+git branch <name for branch> ( to create a branch)
+
+after a branch is created the user needs to select that branch to commit files
+
+git checkout <name of branch> (to open a branch)
+
+
+to merge a branch back to master branch
+(in master branch) git merge <name of branch>
