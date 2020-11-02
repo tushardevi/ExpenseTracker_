@@ -18,12 +18,12 @@ router.get('/', async ctx => {
   const accounts = await new Accounts(dbName)
 	try {
     
-    const records = await accounts.all()
+//     const records = await accounts.all()
     
-    for(const record in records){
-       console.log(`${record}: ${records[record]}`)
+//     for(const record in records){
+//        console.log(`${record}: ${records[record]}`)
      
-    }
+//     }
     //console.log(records)
     
 		await ctx.render('index', ctx.hbs)
