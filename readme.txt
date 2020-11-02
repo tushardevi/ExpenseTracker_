@@ -1,1 +1,6 @@
-back up version 0. 
+DATE : 02/11/2020
+
+TO DO LIST:
+  * IMPLEMENT STAGE 1 PART 1 TODAY
+  
+  finished
