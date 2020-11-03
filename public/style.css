@@ -1,3 +1,31 @@
+/*BUTTON*/
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  background-color: #f44336;
+  
+  
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-right: 600px;
+  margin-left: 600px;
+}
+
+
+
+
+
+
+
 
 body {
 		font-family: Arial, Helvetica, sans-serif;
@@ -22,14 +50,14 @@ aside {
 
 header {
 	background-color: #ccc;
-	border-bottom: 5px solid grey;
+	border-bottom: 5px solid yellow;
 	height: 8vw;
 }
 
 h1, h2, h3 {
 	margin: 0;
 	padding: 0;
-	color: #444;
+	
 }
 
 h1 {
@@ -37,18 +65,24 @@ h1 {
 	float: left;
 	font-size: 3vw;
 	margin-left: 6vw;
+  color : green
 }
 
 h2 {
-	font-size: 2.5vw;
-	margin: 1vw;
-	margin-left: 0.6vw;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  margin-right: 150px;
+  margin-left: 80px;
+  background-color: lightblue;
+  
 }
 
 h3 {
-	font-size: 2vw;
-	margin: 1vw;
-	margin-left: 0.6vw;
+	margin-top: 100px;
+  margin-bottom: 120px;
+  margin-right: 150px;
+  margin-left: 80px;
+  background-color: red;
 }
 
 header > a {
@@ -69,11 +103,18 @@ header > img {
 p, legend {
 	font-size: 1.5vw;
 }
+p0 {
+  font-size: 2vw;
+	margin-top: 2px;
+  margin-bottom: 2px;
+  margin-right: 500px;
+  margin-left: 500px;
+}
 
 main {
 	width: 100%;
 	margin-left: 3vw;
-	/* background-color: pink; */
+	/*background-color: pink;*/
 }
 
 article {
@@ -126,6 +167,8 @@ small {
 /* ===== FORMS ===== */
 
 fieldset {
+ 
+  
 	position: relative;
 	width: 25vw;
 	border: 1px solid #CCC;
@@ -155,12 +198,25 @@ input[type="submit"], header > a, .custom-file-upload {
   text-decoration: none;
   display: inline-block;
 	font-size: 1.5vw;
+  
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-right: 600px;
+  margin-left: 600px;
+  
+  
+   
 	/* border-radius: 0.6vw; */
 }
 
 input[type="submit"]:hover, header > a:hover, .custom-file-upload:hover {
   color: grey;
   background-color: white;
+  
+   margin-top: 6px;
+  margin-bottom: 6px;
+  margin-right: 600px;
+  margin-left: 600px;
 }
 
 input[type="text"], input[type="email"], input[type="password"], textarea, select {
@@ -168,8 +224,17 @@ input[type="text"], input[type="email"], input[type="password"], textarea, selec
 	width: 25vw;
 	border: 1px solid #CCC;
 	padding: 0.5vw;
+  
+  margin-top: 1px;
+  margin-bottom: 3px;
+  margin-right: 600px;
+  margin-left: 600px;
+ 
 	/* margin-bottom: 1vw; */
 	/* border-radius: 0.6vw; */
+  
+  
+
 }
 
 textarea {
@@ -185,6 +250,7 @@ select {
 
 form > br {
 	line-height: 3vw;
+ 
 }
 
 dl {

@@ -13,7 +13,7 @@
 	<body>
 		<header>
 		<h1>Create an Account</h1>
-		<a href="/login">Log in</a>
+		<a href="/">Home</a>
 		</header>
 		{{#if msg}}
  			<aside>
@@ -22,20 +22,15 @@
 		{{/if}}
 		<main>
       
+      
 		<form action="/register" enctype="multipart/form-data" method="post">
-			<p>
-				<label for="user">Username</label><br />
+      
 				<input type="text" name="user" placeholder="your preferred username (no spaces)" value="{{body.user}}">
-			</p>
-			<p>
-				<label for="pass">Password</label><br />
 				<input type="password" name="pass" placeholder="your chosen password" value="{{body.pass}}">
-			</p>
-			<p>
-				<label for="email">Email</label><br />
 				<input type="email" name="email" placeholder="a valid email address" value="{{body.email}}">
-			</p>
-			<p><input type="submit" value="Create"></p>
+      
+			  <input type="submit" value="Create">
+      
 		</form>
 		</main>
 	</body>

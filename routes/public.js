@@ -57,7 +57,7 @@ router.post('/register', async ctx => {
 		// call the functions in the module
 		await account.register(ctx.request.body.user, ctx.request.body.pass, ctx.request.body.email)
     console.log(ctx.hbs)
-		ctx.redirect(`/login?msg=new user "${ctx.request.body.user}" added, you need to log in`)
+		ctx.redirect(`/?msg=new user "${ctx.request.body.user}" added, you need to log in`)
     
 	} catch(err) {
 		ctx.hbs.msg = err.message
@@ -69,10 +69,10 @@ router.post('/register', async ctx => {
 	}
 })
 
-router.get('/login', async ctx => {
-	console.log(ctx.hbs)
-	await ctx.render('login', ctx.hbs)
-})
+// router.get('/login', async ctx => {
+// 	console.log(ctx.hbs)
+// 	await ctx.render('login', ctx.hbs)
+// })
 
 router.post('/login', async ctx => {
 	const account = await new Accounts(dbName)
@@ -83,10 +83,10 @@ router.post('/login', async ctx => {
 		await account.login(body.user, body.pass)
 		ctx.session.authorised = true
 		const referrer = body.referrer || '/secure'
-		return ctx.redirect(`${referrer}?msg=you are now logged in...`)
+		return ctx.redirect(`${referrer}?msg=Welcome Back ${body.user}`)
 	} catch(err) {
 		ctx.hbs.msg = err.message
-		await ctx.render('login', ctx.hbs)
+		await ctx.render('index', ctx.hbs)
 	} finally {
 		account.close()
 	}
