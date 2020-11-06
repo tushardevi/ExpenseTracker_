@@ -15,19 +15,15 @@ const dbName = 'website.db'
  * @route {GET} /
  */
 router.get('/', async ctx => {
-  const accounts = await new Accounts(dbName)
+	//const accounts = await new Accounts(dbName)
 	try {
-    
-//     const records = await accounts.all()
-    
-//     for(const record in records){
-//        console.log(`${record}: ${records[record]}`)
-     
-//     }
-    //console.log(records)
-    
+
+		if(ctx.hbs.authorised) {
+			return ctx.redirect('/secure')
+		}
+
 		await ctx.render('index', ctx.hbs)
-    
+
 	} catch(err) {
 		await ctx.render('error', ctx.hbs)
 	}
@@ -56,9 +52,9 @@ router.post('/register', async ctx => {
 	try {
 		// call the functions in the module
 		await account.register(ctx.request.body.user, ctx.request.body.pass, ctx.request.body.email)
-    console.log(ctx.hbs)
+		console.log(ctx.hbs)
 		ctx.redirect(`/?msg=new user "${ctx.request.body.user}" added, you need to log in`)
-    
+
 	} catch(err) {
 		ctx.hbs.msg = err.message
 		ctx.hbs.body = ctx.request.body
@@ -76,7 +72,7 @@ router.post('/register', async ctx => {
 
 router.post('/login', async ctx => {
 	const account = await new Accounts(dbName)
-  
+
 	ctx.hbs.body = ctx.request.body
 	try {
 		const body = ctx.request.body
