@@ -1,3 +1,11 @@
+
+
+*/IGRONE 
+npm run linter -- --fix   // TO FIX IN LINTER
+
+
+*/
+
 git status to see which file are commited
 git add . (replace . with file names to add specific files)
 git commit -m (commit the changes -m to leave a message)
