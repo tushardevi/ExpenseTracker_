@@ -11,10 +11,13 @@
 		<script type="module" src="main.js"></script>
 	</head>
 	<body>
+    
 		<header>
-		<h1>Secure Page</h1>
-		<a href="/logout">Log out</a>
+		<h1>My Expenses</h1>
+		<a href="/logout">Log out</a> 
 		</header>
+    
+    
 		{{#if msg}}
  			<aside>
 				<p class="msg">{{msg}}</p>
@@ -22,7 +25,10 @@
 		{{/if}}
 		<main>
       
-    <table>
+   <p> <test>Expense Table: </test></p>
+     
+      
+    <table class = "center">
       <tr><th>ID</th><th>DATE</th><th>LABEL</th><th>CASH</th></tr>
       {{#each records}}
         <tr>
@@ -37,18 +43,13 @@
       
       
       
-      
+
       
       
       </table>
+     
       
-      
-      
-      
-      
-      
-      
-		<p>This is a secure page. Users need to have a valid account and be logged in to see it.</p>
+    
 		</main>
     <a class = "add" href="/secure/add-expenses">Add expenses</a>
     
