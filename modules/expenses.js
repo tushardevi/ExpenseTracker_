@@ -1,5 +1,5 @@
 
-/** @module Accounts */
+/** @module Expenses */
 
 import bcrypt from 'bcrypt-promise'
 import sqlite from 'sqlite-async'
@@ -10,7 +10,7 @@ const saltRounds = 10
  * Accounts
  * ES6 module that handles registering accounts and logging in.
  */
-class Accounts {
+class Expenses {
 	/**
    * Create an account object
    * @param {String} [dbName=":memory:"] - The name of the database file to use.
@@ -18,21 +18,20 @@ class Accounts {
 	constructor(dbName = ':memory:') {
 		return (async() => {
 			this.db = await sqlite.open(dbName)
-			// we need this table to store the user accounts
-			const sql = 'CREATE TABLE IF NOT EXISTS users\
-				(id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT, pass TEXT, email TEXT);'
+			// we need this table to store the expenses of all users
+			const sql = 'CREATE TABLE IF NOT EXISTS expenses\
+				(expense_id INTEGER PRIMARY KEY AUTOINCREMENT, userid INTEGER, expense_pass DATE, label TEXT, amount INTEGER);'
 			await this.db.run(sql)
 			return this
 		})()
 	}
 
-	/**
-	 * registers a new user
-	 * @param {String} user the chosen username
-	 * @param {String} pass the chosen password
-	 * @param {String} email the chosen email
-	 * @returns {Boolean} returns true if the new user has been added
-	 */
+
+	/*
+	 *
+	 I WILL NEED TO USE THE FOLLOWING FUNCTIONS LATER WHEN MEMBERS WILL START ADDING EXPENSES DIRECTLY FROM THE WEBSITE
+
+	 * */
 	async register(user, pass, email) {
 		Array.from(arguments).forEach( val => {
 			if(val.length === 0) throw new Error('missing field')
@@ -66,10 +65,16 @@ class Accounts {
 		return true
 	}
 
+	/* ************************************************************************************************************************** */
+
+
 	async all() {
-		const sql = 'SELECT * FROM users'
-		const accounts = await this.db.all(sql)
-		return accounts
+    const h = 0
+		const sql = 'SELECT expenses.expense_date, expenses.label, expenses.amount FROM users,expenses\
+                  WHERE expenses.userid = users.id';
+    
+		const expenses = await this.db.all(sql)
+		return expenses
 	}
 
 	async close() {
@@ -77,4 +82,4 @@ class Accounts {
 	}
 }
 
-export default Accounts
+export default Expenses

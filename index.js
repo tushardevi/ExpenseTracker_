@@ -7,7 +7,6 @@ import session from 'koa-session'
 import router from './routes/routes.js'
 
 
-
 const app = new Koa()
 app.keys = ['darkSecret']
 
@@ -20,15 +19,13 @@ async function getHandlebarData(ctx, next) {
 		authorised: ctx.session.authorised,
 		host: `https://${ctx.host}`
 	}
-  
-	for(const key in ctx.query){
-    ctx.hbs[key] = ctx.query[key]
-  }
-  
+
+	for(const key in ctx.query) {
+		ctx.hbs[key] = ctx.query[key]
+	}
+
 	await next()
 }
-
-
 
 
 app.use(serve('public'))
