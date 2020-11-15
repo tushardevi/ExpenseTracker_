@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS expenses(
 
 -- random values to test the database
 
+
 INSERT INTO expenses(userid, expense_date,label,amount)
   VALUES(22,"01/11/2020"," ",20.50);
   

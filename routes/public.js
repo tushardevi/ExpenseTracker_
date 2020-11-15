@@ -76,9 +76,13 @@ router.post('/login', async ctx => {
 	ctx.hbs.body = ctx.request.body
 	try {
 		const body = ctx.request.body
-		await account.login(body.user, body.pass)
+    const id = await account.login(body.user, body.pass)
+    
 		ctx.session.authorised = true
-		const referrer = body.referrer || '/secure'
+    ctx.session.user = body.user
+    ctx.session.userid = id
+  
+		const referrer = body.referrer || '/secure' 
 		return ctx.redirect(`${referrer}?msg=Welcome Back ${body.user}`)
 	} catch(err) {
 		ctx.hbs.msg = err.message
@@ -90,6 +94,8 @@ router.post('/login', async ctx => {
 
 router.get('/logout', async ctx => {
 	ctx.session.authorised = null
+  delete ctx.session.user
+  delete ctx.session.userid 
 	ctx.redirect('/?msg=you are now logged out')
 })
 

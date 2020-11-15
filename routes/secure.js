@@ -20,14 +20,19 @@ router.use(checkAuth)
 router.get('/', async ctx => {
 	const expenses = await new Expenses(dbName)
 	try {
-		const records = await expenses.all()
-		console.log(records)
+		const records = await expenses.all(ctx.session.userid)
 		ctx.hbs.records = records
 		await ctx.render('secure', ctx.hbs)
 	} catch(err) {
 		ctx.hbs.error = err.message
 		await ctx.render('error', ctx.hbs)
 	}
+})
+
+
+router.get('/add-expenses',async ctx=>{
+  
+  await ctx.render('add-expenses',ctx.hbs)
 })
 
 export default router

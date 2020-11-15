@@ -68,9 +68,13 @@ class Expenses {
 	/* ************************************************************************************************************************** */
 
 
-	async all() {
-		const sql = 'SELECT users.user, expenses.* FROM users,expenses\
-                  WHERE expenses.userid = users.id;'
+	async all(userid) {
+    const h = 0
+   // let sql = `SELECT count(id) AS count FROM users WHERE user="${username}";`
+    
+		let sql = `SELECT expenses.expense_date, expenses.label, expenses.amount FROM expenses\
+                  WHERE expenses.userid = "${userid}";`
+    
 		const expenses = await this.db.all(sql)
 		return expenses
 	}

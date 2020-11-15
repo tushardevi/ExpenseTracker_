@@ -1,0 +1,11 @@
+SWW format – all commits should be multi-line with the first line being a summary,
+followed by one or more lines explaining why the 
+changes were made and finally one or more lines explaining what was changed.
+
+
+
+
+
+
+
+
