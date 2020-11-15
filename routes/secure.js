@@ -20,7 +20,7 @@ router.use(checkAuth)
 router.get('/', async ctx => {
 	const expenses = await new Expenses(dbName)
 	try {
-		const records = await expenses.all()
+		const records = await expenses.all(ctx.session.userid)
 		ctx.hbs.records = records
 		await ctx.render('secure', ctx.hbs)
 	} catch(err) {
