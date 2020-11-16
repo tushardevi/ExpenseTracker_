@@ -7,7 +7,7 @@
 		<title>Home Page</title>
 		<meta name="description" content="form to add new books">
 		<meta name="author" content="Mark Tyers">
-		<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
+    <link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
 		<script type="module" src="main.js"></script>
 	</head>
 	<body>
@@ -23,35 +23,49 @@
 				<p class="msg">{{msg}}</p>
 			</aside>
 		{{/if}}
-		<main>
-      
-   <p> <test>Expense Table: </test></p>
+		
      
-      
-    <table class = "center">
-      <tr><th>ID</th><th>DATE</th><th>LABEL</th><th>CASH</th></tr>
-      
+<div id="main">
+  
+<table class="timecard">
+  
+	<caption>Your expenses</caption>
+	<thead>
+		<tr>
+			<th id="thDay">Date</th>
+			<th id="thRegular">label</th>
+			<th id="thOvertime">amount</th>
+			
+		</tr>
+	</thead>
+  
+	<tbody>
       {{#each records}}
+    
+		<tr class="odd">
+			<td>{{this.expense_date}}</td>
+			<td><a href="/secure/add-expenses">{{this.label}}</td>
+			<td>{{this.amount}}</td>
+		</tr>
+       {{/each}}
+    
+	</tbody>
+	
+</table>
+</div>
+
+      
+    
         <tr>
           <td>{{this.expense_id}}</td>
           <td>{{this.expense_date}}</td>
-          <td>{{this.label}}</td>
+          <td><a href="/secure/add-expenses">{{this.label}}</a></td>
           <td>{{this.amount}}</td>
+          
           </tr>
       
-        {{/each}}
-      
-      
-      
-      
-
-      
-      
-      </table>
      
-      
-    
-		</main>
+ 
     <a class = "add" href="/secure/add-expenses">Add expenses</a>
     
 	</body>
