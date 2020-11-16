@@ -139,11 +139,11 @@ p0 {
   margin-left: 500px;
 }
 
-main {
+ main {
 	width: 100%;
 	margin-left: 3vw;
 	/*background-color: pink;*/
-}
+} 
 
 article {
 	width: 50vw;
@@ -308,30 +308,65 @@ dd {
 
 /* ===== TABLES ===== */
 
-table {
-	/* border: 1px solid grey; */
+#main {
+	width: 780px;
+	padding: 20px;
+	margin: auto;
+}
+
+table.timecard {
+	margin: auto;
+	width: 600px;
 	border-collapse: collapse;
-  margin-top:10px //moves your table 10pixels down
-  margin-left:10px //moves your table 10pixels right
+	border: 1px solid #fff; /*for older IE*/
+	border-style: hidden;
 }
 
-tr:nth-child(odd) {
-  padding: 0.5vw;
-  font-size: 2.5vw;
-  width: 25vw;
-	background: #ADD;
+table.timecard caption {
+	background-color: #2828C8;
+	color: #fff;
+	font-size: x-large;
+	font-weight: bold;
+	letter-spacing: .3em;
 }
 
-td {
-	/* border: 1px solid grey; */
-	padding: 0.5vw;
-	font-size: 2.5vw;
-	width: 25vw;
-  
-  
+table.timecard thead th {
+	padding: 8px;
+	background-color: #ABE4FF;
+	font-size: large;
 }
 
-td:last-child {
-	width: 10vw;
+table.timecard thead th#thDay {
+	width: 40%;	
+}
+
+table.timecard thead th#thRegular, table.timecard thead th#thOvertime, table.timecard thead th#thTotal {
+	width: 20%;
+}
+
+table.timecard th, table.timecard td {
+	padding: 3px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #2828C8 #ccc;
+}
+
+table.timecard td {
 	text-align: right;
+}
+
+table.timecard tbody th {
+	text-align: left;
+	font-weight: normal;
+}
+
+table.timecard tfoot {
+	font-weight: bold;
+	font-size: large;
+	background-color: #687886;
+	color: #fff;
+}
+
+table.timecard tr.even {
+	background-color: #ABE4FF;
 }
