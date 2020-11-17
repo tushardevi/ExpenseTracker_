@@ -20,12 +20,21 @@ class Expenses {
 			this.db = await sqlite.open(dbName)
 			// we need this table to store the expenses of all users
 			const sql = 'CREATE TABLE IF NOT EXISTS expenses\
-				(expense_id INTEGER PRIMARY KEY AUTOINCREMENT, userid INTEGER, expense_pass DATE, label TEXT, amount INTEGER);'
+				(expense_id INTEGER PRIMARY KEY AUTOINCREMENT,\
+          expense_date INTEGER,\
+          category TEXT NOT NULL,\
+          label TEXT NOT NULL,\
+          descrip TEXT NOT NULL,\
+          img_url TEXT,\
+          amount INTEGER,\
+          FOREIGN KEY(userid) REFERENCES users(id) \
+        );'
+      
 			await this.db.run(sql)
 			return this
 		})()
 	}
-
+  
 
 	/*
 	 *
@@ -67,17 +76,24 @@ class Expenses {
 
 	/* ************************************************************************************************************************** */
 
-
-	async all(userid) {
-    const h = 0
+  async all(userid) {
+    
    // let sql = `SELECT count(id) AS count FROM users WHERE user="${username}";`
     
-		let sql = `SELECT expenses.expense_date, expenses.label, expenses.amount FROM expenses\
+		const sql = `SELECT expenses.expense_date, expenses.category, expenses.label, expenses.descrip, expenses.img_url, expenses.amount FROM expenses\
                   WHERE expenses.userid = "${userid}";`
     
 		const expenses = await this.db.all(sql)
+    for(const index in expenses){
+      if(expenses[index].img_url === null) expenses[index].img_url = 'placeholder.jpg'
+      const dateTime = new Date(expenses[index].expense_date)
+      const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
+      expenses[index].expense_date = date
+    }
+    
 		return expenses
 	}
+
 
 	async close() {
 		await this.db.close()

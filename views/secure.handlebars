@@ -7,7 +7,9 @@
 		<title>Home Page</title>
 		<meta name="description" content="form to add new books">
 		<meta name="author" content="Mark Tyers">
-    <link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
+    <link href="{{host}}/BigImg.css" type="text/css" rel="stylesheet" />
+    <link href="{{host}}/style.css" type="text/css" rel="stylesheet" /> -->
+    
 		<script type="module" src="main.js"></script>
 	</head>
 	<body>
@@ -33,8 +35,12 @@
 	<thead>
 		<tr>
 			<th id="thDay">Date</th>
-			<th id="thRegular">label</th>
-			<th id="thOvertime">amount</th>
+			<th id="thRegular">Label</th>
+      <th id="thOvertime">Category</th>
+      <th id="thOvertime">Description</th>
+      <th id="thOvertime">Amount</th>
+			<th id="thOvertime">Picture</th>
+      
 			
 		</tr>
 	</thead>
@@ -44,8 +50,29 @@
     
 		<tr class="odd">
 			<td>{{this.expense_date}}</td>
-			<td><a href="/secure/add-expenses">{{this.label}}</td>
-			<td>{{this.amount}}</td>
+			<td><a href="/secure/add-expenses"/>{{this.label}}</td>
+			<td>{{this.category}}</td>
+      <td>{{this.descrip}}</td>
+      <td>{{this.amount}}</td>
+<!--       <img src = "/images/{{this.img_url}}" alt="pic" width="50" height="30"/> -->
+      
+      <td><a class="lightbox" href="#dog">
+     <img src="/images/cr7.jpg" />
+      </a> 
+      
+    <div class="lightbox-target" id="dog">
+     <img src = "/images/cr7.jpg"/>
+     <a class="lightbox-close" href="#"></a>
+      </div>
+      </td>
+      
+      
+      
+      
+      
+      
+      
+      
 		</tr>
        {{/each}}
     
@@ -53,8 +80,13 @@
 	
 </table>
 </div>
+<<<<<<< HEAD
  
 <!--     <a class = "add" href="/secure/add-expenses">Add expenses</a> -->
+=======
+
+
+>>>>>>> Version1.1
     
 	</body>
 </html>
