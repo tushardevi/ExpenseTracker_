@@ -18,7 +18,7 @@ async function getHandlebarData(ctx, next) {
 	ctx.hbs = {
 		authorised: ctx.session.authorised,
     user: ctx.session.user,
-    userid:ctx.session.userid,
+    userid: ctx.session.userid,
 		host: `https://${ctx.host}`
 	}
 

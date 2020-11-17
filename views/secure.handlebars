@@ -7,7 +7,9 @@
 		<title>Home Page</title>
 		<meta name="description" content="form to add new books">
 		<meta name="author" content="Mark Tyers">
-		<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
+    <link href="{{host}}/BigImg.css" type="text/css" rel="stylesheet" />
+    <link href="{{host}}/style.css" type="text/css" rel="stylesheet" /> -->
+    
 		<script type="module" src="main.js"></script>
 	</head>
 	<body>
@@ -23,36 +25,63 @@
 				<p class="msg">{{msg}}</p>
 			</aside>
 		{{/if}}
-		<main>
-      
-   <p> <test>Expense Table: </test></p>
+		
      
+<div id="main">
+  
+<table class="timecard">
+  
+	<caption>Your expenses</caption>
+	<thead>
+		<tr>
+			<th id="thDay">Date</th>
+			<th id="thRegular">Label</th>
+      <th id="thOvertime">Category</th>
+      <th id="thOvertime">Description</th>
+      <th id="thOvertime">Amount</th>
+			<th id="thOvertime">Picture</th>
       
-    <table class = "center">
-      <tr><th>ID</th><th>DATE</th><th>LABEL</th><th>CASH</th></tr>
-      
+			
+		</tr>
+	</thead>
+  
+	<tbody>
       {{#each records}}
-        <tr>
-          <td>{{this.expense_id}}</td>
-          <td>{{this.expense_date}}</td>
-          <td>{{this.label}}</td>
-          <td>{{this.amount}}</td>
-          </tr>
-      
-        {{/each}}
-      
-      
-      
-      
-
-      
-      
-      </table>
-     
-      
     
-		</main>
-    <a class = "add" href="/secure/add-expenses">Add expenses</a>
+		<tr class="odd">
+			<td>{{this.expense_date}}</td>
+			<td><a href="/secure/add-expenses"/>{{this.label}}</td>
+			<td>{{this.category}}</td>
+      <td>{{this.descrip}}</td>
+      <td>{{this.amount}}</td>
+<!--       <img src = "/images/{{this.img_url}}" alt="pic" width="50" height="30"/> -->
+      
+      <td><a class="lightbox" href="#dog">
+     <img src="/images/cr7.jpg" />
+      </a> 
+      
+    <div class="lightbox-target" id="dog">
+     <img src = "/images/cr7.jpg"/>
+     <a class="lightbox-close" href="#"></a>
+      </div>
+      </td>
+      
+      
+      
+      
+      
+      
+      
+      
+		</tr>
+       {{/each}}
+    
+	</tbody>
+	
+</table>
+</div>
+
+
     
 	</body>
 </html>
