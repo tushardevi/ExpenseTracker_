@@ -72,7 +72,7 @@ class Expenses {
     const h = 0
    // let sql = `SELECT count(id) AS count FROM users WHERE user="${username}";`
     
-		let sql = `SELECT expenses.expense_date, expenses.label, expenses.amount FROM expenses\
+		const sql = `SELECT expenses.expense_date, expenses.label, expenses.category, expenses.amount, expenses.descript, expenses.img_url FROM expenses\
                   WHERE expenses.userid = "${userid}";`
     
 		const expenses = await this.db.all(sql)
