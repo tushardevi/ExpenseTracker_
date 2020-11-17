@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS expenses(
   expense_id INTEGER PRIMARY KEY AUTOINCREMENT,
   userid INTEGER,
   
-  -- for stage 1: part 1, I only need to add 3 attributes
+  -- for stage 1: part 2, now i need 6 attributes
   expense_date INTEGER,
   category TEXT NOT NULL,
   label TEXT NOT NULL,
