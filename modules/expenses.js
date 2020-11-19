@@ -81,7 +81,7 @@ class Expenses {
    // let sql = `SELECT count(id) AS count FROM users WHERE user="${username}";`
     
 		const sql = `SELECT expenses.expense_date, expenses.category, expenses.label, expenses.descrip, expenses.img_url, expenses.amount FROM expenses\
-                  WHERE expenses.userid = "${userid}";`
+                  WHERE expenses.userid = "${userid}" ORDER BY expenses.expense_date ASC;`
     
 		const expenses = await this.db.all(sql)
     for(const index in expenses){

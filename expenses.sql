@@ -22,13 +22,13 @@ CREATE TABLE IF NOT EXISTS expenses(
 
 
 INSERT INTO expenses(userid, expense_date,label,amount,descrip,img_url,category)
-  VALUES(5,CURRENT_TIMESTAMP,"Dinner",20.50,"associates meeting","avatr.png","Food");
+  VALUES(5,CURRENT_TIMESTAMP,"Picnic",120.50,"holiday","avatr.png","luxury");
   
-INSERT INTO expenses(userid, expense_date,label,amount,descrip,img_url,category)
-  VALUES(5,CURRENT_TIMESTAMP,"Party",20.50,"Pub night","avatr.png","Luxury");
+-- INSERT INTO expenses(userid, expense_date,label,amount,descrip,img_url,category)
+--   VALUES(5,CURRENT_TIMESTAMP,"Party",20.50,"Pub night","avatr.png","Luxury");
   
-INSERT INTO expenses(userid, expense_date,label,amount,descrip,img_url,category)
-  VALUES(5,CURRENT_TIMESTAMP,"Car",20.50,"car bought","avatr.png","Other");
+-- INSERT INTO expenses(userid, expense_date,label,amount,descrip,img_url,category)
+--   VALUES(5,CURRENT_TIMESTAMP,"Car",20.50,"car bought","avatr.png","Other");
   
   
   
