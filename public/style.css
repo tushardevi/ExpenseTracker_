@@ -237,6 +237,7 @@ input[type="submit"], header > a, .custom-file-upload {
 	/* border-radius: 0.6vw; */
 }
 
+
 input[type="submit"]:hover, header > a:hover, .custom-file-upload:hover {
   color: grey;
   background-color: white;
@@ -258,17 +259,33 @@ input[type="text"], input[type="email"], input[type="password"], textarea, selec
   margin-right: 600px;
   margin-left: 600px;
  
+
 	/* margin-bottom: 1vw; */
 	/* border-radius: 0.6vw; */
   
   
 
 }
-
 textarea {
+  background-color : #AEF
 	height: 10vw;
 	resize: none;
 }
+
+input:required,textarea: required{
+  border-width: 2px;
+}
+
+input:invalid,textarea: invalid{
+  border-color: red;
+}
+
+input:valid,textarea: valid{
+  border-color: darkgreen;
+}
+
+
+
 
 select {
 	width: 26.3vw;
