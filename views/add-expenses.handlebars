@@ -23,36 +23,36 @@
     
     		<main>
          
-          <form method = "post" action= "/secure/add-expenses" enctype = "multipart/form-data">
+          <form action= "/secure/add-expenses" method = "post"  enctype = "multipart/form-data">
            
             <p>
-            <label for= "date"> Expense Date</label><br />
-           <input type= "date" name= "expensedate"  value = "" required /> 
+            <label for= "date"> Select Date</label><br />
+           <input type= "date" name= "date"  value = ""> 
             </p>
                 
             
             <p>
             <label for= "label">  Label </label><br />
-            <input type= "text" name= "expenselabel" value = "" required />  
+            <input type= "text" name= "label" value = "">  
             </p>
             
             <p>
             <label for= "category"> Category</label><br />
-            <input type= "text" name= "expensename"  value = "" required />  
+            <input type= "text" name= "category"  value = "">  
             </p>
             
             <p>
             
             <label for= "description"> Description</label><br />
-            <input type= "text" name= "description" value = "" required />  
+            <input type= "text" name= "descrip" value = "">  
             </p>
             
              <p>
             <label for= "amount"> Amount</label><br />
-            <input type= "text" name= "description" value = "" required />  
+            <input type= "number" name= "amount" value = "" step = "0.01" min="0">  
             </p>
             
-            
+            <input type="submit" value="Add">
             
             
             
