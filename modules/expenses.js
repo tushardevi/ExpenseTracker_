@@ -22,75 +22,54 @@ class Expenses {
 			const sql = 'CREATE TABLE IF NOT EXISTS expenses\
 				(expense_id INTEGER PRIMARY KEY AUTOINCREMENT,\
           expense_date INTEGER,\
-          category TEXT NOT NULL,\
-          label TEXT NOT NULL,\
-          descrip TEXT NOT NULL,\
-          img_url TEXT,\
+          category TEXT,\
+          label TEXT,\
+          descrip TEXT,\
           amount INTEGER,\
+          userid INTEGER,\
           FOREIGN KEY(userid) REFERENCES users(id) \
         );'
-      
+
+			//img_url TEXT,\
 			await this.db.run(sql)
 			return this
 		})()
 	}
-  
 
-	/*
-	 *
-	 I WILL NEED TO USE THE FOLLOWING FUNCTIONS LATER WHEN MEMBERS WILL START ADDING EXPENSES DIRECTLY FROM THE WEBSITE
 
-	 * */
-	async register(user, pass, email) {
-		Array.from(arguments).forEach( val => {
-			if(val.length === 0) throw new Error('missing field')
-		})
-		let sql = `SELECT COUNT(id) as records FROM users WHERE user="${user}";`
-		const data = await this.db.get(sql)
-		if(data.records !== 0) throw new Error(`username "${user}" already in use`)
-		sql = `SELECT COUNT(id) as records FROM users WHERE email="${email}";`
-		const emails = await this.db.get(sql)
-		if(emails.records !== 0) throw new Error(`email address "${email}" is already in use`)
-		pass = await bcrypt.hash(pass, saltRounds)
-		sql = `INSERT INTO users(user, pass, email) VALUES("${user}", "${pass}", "${email}")`
+/*function which gets all the data and saves it into the expenses table in the website.db 
+* it also checks if all fields are filled*/
+	async AddExpense(data) {
+		console.log(data)
+		// 		Array.from(arguments).forEach( val => {
+		// 			if(val.length === 0) throw new Error('missing field')
+		// 		})
+
+		const sql = `INSERT INTO expenses(expense_date, category, label,descrip,amount,userid) VALUES("${data.date}",\
+                  "${data.category}", "${data.label}",\
+                  "${data.descrip}","${data.amount}","${data.userid}")`
+		//,/*"${img_url}"*/
 		await this.db.run(sql)
+
 		return true
 	}
 
-	/**
-	 * checks to see if a set of login credentials are valid
-	 * @param {String} username the username to check
-	 * @param {String} password the password to check
-	 * @returns {Boolean} returns true if credentials are valid
-	 */
-	async login(username, password) {
-		let sql = `SELECT count(id) AS count FROM users WHERE user="${username}";`
-		const records = await this.db.get(sql)
-		if(!records.count) throw new Error(`username "${username}" not found`)
-		sql = `SELECT pass FROM users WHERE user = "${username}";`
-		const record = await this.db.get(sql)
-		const valid = await bcrypt.compare(password, record.pass)
-		if(valid === false) throw new Error(`invalid password for account "${username}"`)
-		return true
-	}
 
-	/* ************************************************************************************************************************** */
+/*function to retrieve data from the expenses table in website.db. 
+* * This function also sets a placeholder image if an img url is not present
+and simplifies the datatime just to date in format DD/MM/YYYY*/
+	async all(userid) {
+		const sql = `SELECT expense_date, category, label, descrip, amount FROM expenses\
+                  WHERE userid = "${userid}" ORDER BY expense_date ASC;`
 
-  async all(userid) {
-    
-   // let sql = `SELECT count(id) AS count FROM users WHERE user="${username}";`
-    
-		const sql = `SELECT expenses.expense_date, expenses.category, expenses.label, expenses.descrip, expenses.img_url, expenses.amount FROM expenses\
-                  WHERE expenses.userid = "${userid}" ORDER BY expenses.expense_date ASC;`
-    
 		const expenses = await this.db.all(sql)
-    for(const index in expenses){
-      if(expenses[index].img_url === null) expenses[index].img_url = 'placeholder.jpg'
-      const dateTime = new Date(expenses[index].expense_date)
-      const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
-      expenses[index].expense_date = date
-    }
-    
+		for(const index in expenses) {
+			//if(expenses[index].img_url === null) expenses[index].img_url = 'placeholder.jpg'
+			const dateTime = new Date(expenses[index].expense_date)
+			const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
+			expenses[index].expense_date = date
+		}
+
 		return expenses
 	}
 
