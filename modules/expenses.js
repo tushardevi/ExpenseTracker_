@@ -60,7 +60,7 @@ class Expenses {
 and simplifies the datatime just to date in format DD/MM/YYYY*/
 	async all(userid) {
 		const sql = `SELECT expense_date, category, label, descrip, amount FROM expenses\
-                  WHERE userid = "${userid}" ORDER BY expense_date ASC;`
+                  WHERE userid = "${userid}" ORDER BY expense_date DESC;`
 
 		const expenses = await this.db.all(sql)
 		for(const index in expenses) {
