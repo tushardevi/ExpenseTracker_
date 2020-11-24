@@ -29,8 +29,8 @@ class Expenses {
           userid INTEGER,\
           FOREIGN KEY(userid) REFERENCES users(id) \
         );'
-
-			//img_url TEXT,\
+ //img_url TEXT,\
+			
 			await this.db.run(sql)
 			return this
 		})()
@@ -59,7 +59,7 @@ class Expenses {
 * * This function also sets a placeholder image if an img url is not present
 and simplifies the datatime just to date in format DD/MM/YYYY*/
 	async all(userid) {
-		const sql = `SELECT expense_date, category, label, descrip, amount FROM expenses\
+		const sql = `SELECT expense_date, category, label, descrip, amount,img_url FROM expenses\
                   WHERE userid = "${userid}" ORDER BY expense_date DESC;`
 
 		const expenses = await this.db.all(sql)
