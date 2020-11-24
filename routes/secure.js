@@ -43,6 +43,15 @@ router.get('/add-expenses',async ctx => {
 router.post('/add-expenses', async ctx => {
 	const expenses2 = await new Expenses(dbName)
 	try {
+    
+     if(ctx.request.files.avatar.name){
+        ctx.request.body.filePath = ctx.request.files.avatar.path
+        ctx.request.body.fileName = ctx.request.files.avatar.name
+        ctx.request.body.fileType = ctx.request.files.avatar.type
+     }
+      
+    
+    
 		// call the functions in the module
 		ctx.request.body.userid = ctx.session.userid
 		await expenses2.AddExpense(ctx.request.body)
