@@ -3,6 +3,8 @@
 
 import bcrypt from 'bcrypt-promise'
 import sqlite from 'sqlite-async'
+import fs from 'fs-extra'
+import mime from 'mime-types'
 
 const saltRounds = 10
 
@@ -27,6 +29,7 @@ class Expenses {
           descrip TEXT,\
           amount INTEGER,\
           userid INTEGER,\
+          filename TEXT,\
           FOREIGN KEY(userid) REFERENCES users(id) \
         );'
 
@@ -41,15 +44,28 @@ class Expenses {
 * it also checks if all fields are filled*/
 	async AddExpense(data) {
 		console.log(data)
-		// 		Array.from(arguments).forEach( val => {
-		// 			if(val.length === 0) throw new Error('missing field')
-		// 		})
-
-		const sql = `INSERT INTO expenses(expense_date, category, label,descrip,amount,userid) VALUES("${data.date}",\
+		let filename
+    if(data.fileName){
+      filename = `${Date.now()}.${mime.extension(data.fileType)}`
+      console.log(filename)
+      await fs.copy(data.filePath, `public/avatars/${filename}`)
+    }
+   
+    try{
+      const sql = `INSERT INTO expenses(expense_date, category, label,descrip,amount,userid,filename) VALUES("${data.date}",\
                   "${data.category}", "${data.label}",\
-                  "${data.descrip}","${data.amount}","${data.userid}")`
+                  "${data.descrip}",${data.amount},"${data.userid}","${filename}")`
+      
 		//,/*"${img_url}"*/
-		await this.db.run(sql)
+      
+      await this.db.run(sql)
+      
+    } catch(err){
+      console.log(err)
+      throw(err)
+    }
+
+		
 
 		return true
 	}
@@ -59,12 +75,12 @@ class Expenses {
 * * This function also sets a placeholder image if an img url is not present
 and simplifies the datatime just to date in format DD/MM/YYYY*/
 	async all(userid) {
-		const sql = `SELECT expense_date, category, label, descrip, amount FROM expenses\
+		const sql = `SELECT expense_date, category, label, descrip, amount,filename FROM expenses\
                   WHERE userid = "${userid}" ORDER BY expense_date DESC;`
 
 		const expenses = await this.db.all(sql)
 		for(const index in expenses) {
-			//if(expenses[index].img_url === null) expenses[index].img_url = 'placeholder.jpg'
+			if(expenses[index].filename === null) expenses[index].filename = 'placeholder.jpg'
 			const dateTime = new Date(expenses[index].expense_date)
 			const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
 			expenses[index].expense_date = date

@@ -37,9 +37,10 @@
 		<tr>
 			<th id="thDay">Date</th>
 			<th id="thRegular">Label</th>
-      <th id="thOvertime">Category</th>
-      <th id="thOvertime">Description</th>
-      <th id="thOvertime">Amount</th>
+      <th id="category">Category</th>
+      <th id="descrip">Description</th>
+      <th id="acmount">Amount</th>
+      <th id="receipt">Receipt</th>
 <!-- 			<th id="thOvertime">Picture</th> -->
       
 			
@@ -55,14 +56,13 @@
 			<td>{{this.category}}</td>
       <td>{{this.descrip}}</td>
       <td>{{this.amount}}</td>
-<!--       <img src = "/images/{{this.img_url}}" alt="pic" width="50" height="30"/> -->
       
-      <td><a class="lightbox" href="#dog">
-     <img src="/images/cr7.jpg" />
+      <td><a class="lightbox" href="#{{this.filename}}">
+     <img src="avatars/{{this.filename}}"/>
       </a> 
       
-    <div class="lightbox-target" id="dog">
-     <img src = "/images/cr7.jpg"/>
+    <div class="lightbox-target" id="{{this.filename}}">
+     <img src = "avatars/{{this.filename}}"/>
      <a class="lightbox-close" href="#"></a>
       </div>
 		</tr>
