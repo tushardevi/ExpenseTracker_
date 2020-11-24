@@ -4,7 +4,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Home Page</title>
+		<title>secure-page</title>
 		<meta name="description" content="form to add new books">
 		<meta name="author" content="Mark Tyers">
     <link href="{{host}}/BigImg.css" type="text/css" rel="stylesheet" />
@@ -16,7 +16,8 @@
     
 		<header>
 		<h1>My Expenses</h1>
-		<a href="/logout">Log out</a> 
+    <a href="secure/add-expenses">Add expense</a> 
+    <a href="/logout">Log out</a>  
 		</header>
     
     
@@ -36,10 +37,11 @@
 		<tr>
 			<th id="thDay">Date</th>
 			<th id="thRegular">Label</th>
-      <th id="thOvertime">Category</th>
-      <th id="thOvertime">Description</th>
-      <th id="thOvertime">Amount</th>
-			<th id="thOvertime">Picture</th>
+      <th id="category">Category</th>
+      <th id="descrip">Description</th>
+      <th id="acmount">Amount</th>
+      <th id="receipt">Receipt</th>
+<!-- 			<th id="thOvertime">Picture</th> -->
       
 			
 		</tr>
@@ -54,34 +56,26 @@
 			<td>{{this.category}}</td>
       <td>{{this.descrip}}</td>
       <td>{{this.amount}}</td>
-<!--       <img src = "/images/{{this.img_url}}" alt="pic" width="50" height="30"/> -->
       
-      <td><a class="lightbox" href="#dog">
-     <img src="/images/cr7.jpg" />
+      <td><a class="lightbox" href="#{{this.filename}}">
+     <img src="avatars/{{this.filename}}"/>
       </a> 
       
-    <div class="lightbox-target" id="dog">
-     <img src = "/images/cr7.jpg"/>
+    <div class="lightbox-target" id="{{this.filename}}">
+     <img src = "avatars/{{this.filename}}"/>
      <a class="lightbox-close" href="#"></a>
       </div>
-      </td>
-      
-      
-      
-      
-      
-      
-      
-      
 		</tr>
        {{/each}}
     
 	</tbody>
+  
 	
 </table>
 </div>
-
-
+    
+    
+   
     
 	</body>
 </html>

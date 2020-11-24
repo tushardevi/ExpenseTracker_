@@ -4,7 +4,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Home Page</title>
+		<title>add-expenses</title>
 		<meta name="description" content="form to add new books">
 		<meta name="author" content="Mark Tyers">
 		<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
@@ -20,36 +20,54 @@
 				<p class="msg">{{msg}}</p>
 			</aside>
 		{{/if}}
+    
     		<main>
-          <form method = "post" action= "/secure/add-expenses" enctype = "multipart/form-data">
+         
+          <form action= "/secure/add-expenses" method = "post"  enctype = "multipart/form-data">
+           
             <p>
-            <label for= "expensedate"> Expense Date</label><br />
-            <input type= "text" name= "expensedate" placeholder = "expense date" value = "" required />  
+            <label for= "date"> Select Date</label><br />
+           <input type= "date" name= "date"  value = ""> 
+            </p>
+                
+            
+            <p>
+            <label for= "label">  Label </label><br />
+            <input type= "text" name= "label" value = "">  
             </p>
             
             <p>
-            <label for= "expenselabel">  Label </label><br />
-            <input type= "text" name= "expenselabel" placeholder = "expense label" value = "" required />  
+            <label for= "category"> Category</label><br />
+            <input type= "text" name= "category"  value = "">  
             </p>
             
             <p>
-            <label for= "expensename"> Expense Name</label><br />
-            <input type= "text" name= "expensename" placeholder = "expense name" value = "" required />  
+            
+            <label for= "description"> Description</label><br />
+            <input type= "text" name= "descrip" value = "">  
+            </p>
+            
+             <p>
+            <label for= "amount"> Amount</label><br />
+            <input type= "number" name= "amount" value = "" step = "0.01" min="0">  
             </p>
             
             <p>
-            <label for= "expensename"> Expense Name</label><br />
-            <input type= "text" name= "expensename" placeholder = "expense name" value = "" required />  
-            </p>
+            
+    
+            <label for = "avatar" >receipt:</label><b />
+            <input type="file" name="avatar" accept="image/*">
+              </p>
+            
+            <input type="submit" value="Add">
             
             
             
             
           </form>
           
-          
-          
-          
+         
+        
           
           
           
