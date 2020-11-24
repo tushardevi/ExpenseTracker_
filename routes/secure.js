@@ -34,7 +34,7 @@ router.get('/', async ctx => {
 /*opens up the add-expenses page*/
 router.get('/add-expenses',async ctx => {
 
-	await ctx.render('add-expenses',ctx.hbs)
+	await ctx.render('add2-expenses',ctx.hbs)
 })
 
 
