@@ -75,11 +75,9 @@ class Expenses {
 * * This function also sets a placeholder image if an img url is not present
 and simplifies the datatime just to date in format DD/MM/YYYY*/
 	async all(userid) {
-<<<<<<< HEAD
-		const sql = `SELECT expense_date, category, label, descrip, amount,img_url FROM expenses\
-=======
+
+	//	const sql = `SELECT expense_date, category, label, descrip, amount,img_url FROM expenses\
 		const sql = `SELECT expense_date, category, label, descrip, amount,filename FROM expenses\
->>>>>>> master
                   WHERE userid = "${userid}" ORDER BY expense_date DESC;`
 
 		const expenses = await this.db.all(sql)
