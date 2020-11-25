@@ -37,20 +37,22 @@
      -->
 	
    
-    <h3><p>Sign In</p></h3>
     
     
-    <form action="/login" method="post">
+    
+    <form class = "formCenter" action="/login" method="post">
 			
-			<input type="text" name="user" placeholder="Username" value="{{body.user}}" autofocus>
-			<input type="password" name="pass" placeholder="Password" value="{{body.pass}}">
+			<input class ="tbox" type="text" name="user" placeholder="Username" value="{{body.user}}" autofocus>
+			<input class ="tbox" type="password" name="pass" placeholder="Password" value="{{body.pass}}">
 
 			<input type="hidden" name="referrer" value="{{referrer}}">
       
-			<input type="submit" value="Sign in">
+			<input class = "button" type="submit" value="Sign in">
+      <a href="/register" class="button">Create Account</a>
       
 		</form>
-    <a href="/register" class="button">Create Account</a>
+    
+    
     
     
     
