@@ -1,0 +1,94 @@
+
+<!doctype html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>add-expenses</title>
+		<meta name="description" content="form to add new books">
+		<meta name="author" content="Mark Tyers">
+<!--         <link href="{{host}}/style.css" type="text/css" rel="stylesheet" /> -->
+		<link href="{{host}}/form/css/style.css" type="text/css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+		<script type="module" src="{{host}}/form/js/index.js"></script>
+	</head>
+<body>
+  <header>
+    
+		<h1>ADD</h1>
+		<a href="/logout">Log out</a>
+		</header>
+  
+  
+  
+		{{#if msg}}
+ 			<aside>
+				<p class="msg">{{msg}}</p>
+			</aside>
+		{{/if}}
+  
+  
+  
+  
+  
+  <main>
+  <div class="wrapper">
+    <div class="container">
+        <article class="part card-details">
+            <h1>
+                New Expense
+            </h1>
+            <form form action= "/secure/add-expenses" method = "post"  enctype = "multipart/form-data">
+                
+              
+                <div class="group card-name">
+                    
+                    <input type="date" name = "date" value "" placeholder = "date">
+                </div>
+              
+               <div class="group card-name">
+          
+                    <input type="text" name = "label" value = "" maxlength="20" placeholder = "Label">
+                </div>
+              
+               <div class="group card-name">
+                  
+                    <input type="text" name = "category" value = "" maxlength="20" placeholder = "Category">
+                </div>
+              
+               <div class="group card-name">
+              
+                    <input type="text" name="description" value "" maxlength="20" placeholder = "Description" >
+                </div>
+              
+               <div class="group card-name">
+                  
+                    <input type="number" name="amount" value = "" placeholder ="Amount">
+                </div>
+              
+              
+                 <div class="group card-name">
+                    <input type="file" name="avatar" accept="image/*" placeholder = "upload">
+                 </div>
+              
+              
+                <div class="grup submit-group">
+                    <span class="arrow"></span>
+                    <input type="submit" class="submit" value="Add">
+                </div>
+              
+              
+            </form>
+        </article>
+        <div class="part bg"></div>
+    </div>
+</div>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+    <script src="{{host}}/form/js/index.js"></script>
+    
+    
+</main>
+</body>
+</html>
