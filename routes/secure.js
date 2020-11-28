@@ -21,7 +21,10 @@ router.get('/', async ctx => {
 	//ctx.session.authorised = null
 	const expenses = await new Expenses(dbName)
 	try {
+		/*retrieving all expenses of a member*/
 		const records = await expenses.all(ctx.session.userid)
+   // console.log("ALL")
+   // console.log(records)
 		ctx.hbs.records = records
 		await ctx.render('secure', ctx.hbs)
 	} catch(err) {
@@ -30,12 +33,35 @@ router.get('/', async ctx => {
 	}
 })
 
-
+ 
 /*opens up the add-expenses page*/
 router.get('/add-expenses',async ctx => {
-
 	await ctx.render('add2-expenses',ctx.hbs)
 })
+
+
+
+/*opens up the details page (different for each expense)*/
+router.get('/details/:id',async ctx => {
+  
+  const expenses = await new Expenses(dbName)
+	try {
+    console.log(`record: ${ctx.params.id}`)
+		
+		/*retrieving one expense*/
+		ctx.hbs.expense = await expenses.get_expense(ctx.params.id)
+    ctx.hbs.id = ctx.params.id
+
+		await ctx.render('details',ctx.hbs)
+	} catch(err) {
+    console.log(err.message)
+		ctx.hbs.error = err.message
+		await ctx.render('error', ctx.hbs)
+	}
+  
+})
+  
+
 
 
 /*this post method will retieve all the necessary data from the add-expense
@@ -43,19 +69,20 @@ router.get('/add-expenses',async ctx => {
 router.post('/add-expenses', async ctx => {
 	const expenses2 = await new Expenses(dbName)
 	try {
-    
-     if(ctx.request.files.avatar.name){
-        ctx.request.body.filePath = ctx.request.files.avatar.path
-        ctx.request.body.fileName = ctx.request.files.avatar.name
-        ctx.request.body.fileType = ctx.request.files.avatar.type
-     }
-      
-    
-    
+
+
+		if(ctx.request.files.avatar.name) {
+			ctx.request.body.filePath = ctx.request.files.avatar.path
+			ctx.request.body.fileName = ctx.request.files.avatar.name
+			ctx.request.body.fileType = ctx.request.files.avatar.type
+		}
+
+
 		// call the functions in the module
 		ctx.request.body.userid = ctx.session.userid
 		await expenses2.AddExpense(ctx.request.body)
 		console.log(ctx.hbs)
+
 		ctx.redirect('/secure?msg=new expense added')
 
 	} catch(err) {
@@ -67,6 +94,5 @@ router.post('/add-expenses', async ctx => {
 		expenses2.close()
 	}
 })
-
 
 export default router

@@ -51,7 +51,7 @@ router.get('/register', async ctx => {
  * @name Register Script
  * @route {POST} /register
  */
-/*route to retieve data from the texboxes in the "/register" page and add it to the database 
+/*route to retieve data from the texboxes in the "/register" page and add it to the database
 * by using the object account*/
 router.post('/register', async ctx => {
 	const account = await new Accounts(dbName)
