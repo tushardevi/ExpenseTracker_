@@ -11,14 +11,33 @@
     <link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
     
 		<script type="module" src="main.js"></script>
+    
+    <style>
+       body {
+          background-image: url("https://media.cntraveler.com/photos/5eac691f4623d48988c21830/master/w_4200,h_2803,c_limit/Trunk-Bay-St-John-GettyImages-509468664.jpg");
+          /* Full height */
+          height: 100%;
+
+          /* Center and scale the image nicely */
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+       }
+    </style>
 	</head>
 	<body>
     
-		<header>
-		<h1>My Expenses</h1>
-    <a href="secure/add-expenses">Add expense</a> 
-    <a href="/logout">Log out</a>  
-		</header>
+    <header>
+    <div class="overlay">
+      <h1>My Expenses</h1>
+        <a  href="secure/add-expenses">Add expense</a> 
+        <a href="/logout">Log out</a>  
+    <br>
+      </div>
+  </header>
+    
+    
+		
     
     
 		{{#if msg}}
@@ -28,6 +47,7 @@
 		{{/if}}
 		
      
+  <h1>Total : £ {{total}}</h1>
 <div id="main">
   
 <table class="timecard">
@@ -50,7 +70,7 @@
 		<tr class="odd">
 			<td>{{this.expense_date}}</td>
 			<td><a href="/secure/details/{{this.expense_id}}"/>{{this.label}}</td>
-      <td>{{this.amount}}</td>
+      <td>£ {{this.amount}}</td>
       
     
        {{/each}}
@@ -61,8 +81,7 @@
 </table>
 </div>
     
-    
    
-    
+     
 	</body>
 </html>

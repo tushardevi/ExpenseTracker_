@@ -20,54 +20,63 @@ router.use(checkAuth)
 router.get('/', async ctx => {
 	//ctx.session.authorised = null
 	const expenses = await new Expenses(dbName)
+
+
 	try {
 		/*retrieving all expenses of a member*/
 		const records = await expenses.all(ctx.session.userid)
-   // console.log("ALL")
-   // console.log(records)
+		// get the total amount spent
+		const _total = await expenses.getTotal(ctx.session.userid)
+		console.log('TOTAL IS: ')
+		console.log(_total)
+		// console.log("ALL")
+		// console.log(records)
 		ctx.hbs.records = records
+		ctx.hbs.total = _total
+		console.log( ctx.hbs.total )
 		await ctx.render('secure', ctx.hbs)
+
 	} catch(err) {
+		console.log(err.message)
 		ctx.hbs.error = err.message
 		await ctx.render('error', ctx.hbs)
 	}
+
+
 })
 
- 
+
 /*opens up the add-expenses page*/
 router.get('/add-expenses',async ctx => {
 	await ctx.render('add2-expenses',ctx.hbs)
 })
 
 
-
 /*opens up the details page (different for each expense)*/
 router.get('/details/:id',async ctx => {
-  
-  const expenses = await new Expenses(dbName)
+
+	const expenses = await new Expenses(dbName)
 	try {
-    console.log(`record: ${ctx.params.id}`)
-		
+		console.log(`record: ${ctx.params.id}`)
+
 		/*retrieving one expense*/
-		ctx.hbs.expense = await expenses.get_expense(ctx.params.id)
-    ctx.hbs.id = ctx.params.id
+		ctx.hbs.expense = await expenses.getExpense(ctx.params.id)
+		ctx.hbs.id = ctx.params.id
 
 		await ctx.render('details',ctx.hbs)
 	} catch(err) {
-    console.log(err.message)
+		console.log(err.message)
 		ctx.hbs.error = err.message
 		await ctx.render('error', ctx.hbs)
 	}
-  
-})
-  
 
+})
 
 
 /*this post method will retieve all the necessary data from the add-expense
  * page and add it to the expenses table in website.db*/
 router.post('/add-expenses', async ctx => {
-	const expenses2 = await new Expenses(dbName)
+	const expenses = await new Expenses(dbName)
 	try {
 
 
@@ -80,7 +89,10 @@ router.post('/add-expenses', async ctx => {
 
 		// call the functions in the module
 		ctx.request.body.userid = ctx.session.userid
-		await expenses2.AddExpense(ctx.request.body)
+
+		await expenses.checkDate(ctx.request.body)
+
+		await expenses.AddExpense(ctx.request.body)
 		console.log(ctx.hbs)
 
 		ctx.redirect('/secure?msg=new expense added')
@@ -91,7 +103,7 @@ router.post('/add-expenses', async ctx => {
 		console.log(ctx.hbs)
 		await ctx.render('add2-expenses', ctx.hbs)
 	} finally {
-		expenses2.close()
+		expenses.close()
 	}
 })
 

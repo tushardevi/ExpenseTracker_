@@ -1,4 +1,5 @@
 /*BUTTON*/
+*{padding: 0; margin: 0; box-sizing: border-box;}
 ::placeholder {
   color: white;
   font-family: "Arial Black";
@@ -13,23 +14,53 @@
  color: white;
 }
 .button {
-  background-color: #4CAF50; /* Green */
+ font-size: 1.3vw;
   border: none;
   color: white;
-  padding: 15px 32px;
+/*   padding: 15px 32px; */
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
-  background-color: #f44336;
+  background-color: #ea8c8c;
   
   
   margin-top: 6px;
   margin-bottom: 2px;
   margin-right: 600px;
-  margin-left: 750px;
+  margin-left: 734px;
+ 
+	
+	padding: 10px 20px;
+	border-radius: 50px;
+	box-shadow: 0 3px 20px 0 #0000003b;
+}
+
+.button:hover {
+   font-size: 1.3vw;
+/*   font-family :"Arial Black" */
+/*   border: 2px solid black; */
+  color: white;
+/*   padding: 15px 32px; */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+/*   font-size: 16px; */
+  margin: 4px 2px;
+  cursor: pointer;
+  background-color: #7bf1f7;
+  
+  margin-top: 6px;
+  margin-bottom: 2px;
+  margin-right: 600px;
+  margin-left: 734px;
+  
+  padding: 10px 20px;
+	border-radius: 50px;
+	box-shadow: 0 3px 20px 0 #0000003b;
+  
+  
 }
 
 .formCenter{
@@ -157,6 +188,47 @@ aside {
 }
 
 header {
+	background: url('https://media.cntraveler.com/photos/5eac691f4623d48988c21830/master/w_4200,h_2803,c_limit/Trunk-Bay-St-John-GettyImages-509468664.jpg');
+	text-align: center;
+	width: 100%;
+	height: auto;
+	background-size: cover;
+	background-attachment: fixed;
+	position: relative;
+	overflow: hidden;
+	border-radius: 0 0 85% 85% / 30%;
+}
+
+
+
+
+ .overlay{
+	width: 100%;
+	height: 100%;
+	padding: 50px;
+	color: #FFF;
+	text-shadow: 1px 1px 1px #333;
+  background-image: linear-gradient( 135deg, #9f05ff69 10%, #fd5e086b 100%);
+	
+}
+
+h1 { 
+  margin: 0; 
+  font-family: 'Leckerli One', cursive;
+  text-shadow: 0 11px rgba(0,0,0,.5);
+  font-size: 80px;
+}
+
+/* h3, p {
+	font-family: 'Open Sans', sans-serif;
+	margin-bottom: 30px;
+}
+ */
+
+
+
+
+/* header {
 	background-color: transparent;
 	  font-family: cursive;
 
@@ -169,6 +241,8 @@ header {
     
     
 }
+ */
+
 
 @-webkit-keyframes glow {
   from {
@@ -181,13 +255,13 @@ header {
 }
 	height: 8vw;
 }
-
+/* 
 h1, h2, h3 {
 	margin: 0;
 	padding: 0;
  
 	
-}
+} */
 
 test {
   color : #474DC7;
@@ -198,16 +272,18 @@ test {
    border-bottom: 2px solid black;
    text-transform: uppercase;
  }
-
+/* 
 h1 {
 	padding: 2.6vw;
 	float: left;
 	font-size: 3vw;
 	margin-left: 26vw;
   color : white ;
-}
+} */
 
-h2 {
+
+
+/* h2 {
   margin-top: 100px;
   margin-bottom: 100px;
   margin-right: 150px;
@@ -226,22 +302,23 @@ h3 {
   margin-bottom: 120px;
   margin-right: 8px;
   margin-left: 80px; */
-}
+} */
 
-header > a {
+
+/* header > a {
 	margin-top: 3vw;
 	margin-right: 2vw;
   float: right; 
 	font-size: 1.3vw;
-}
+} */
 
-header > img {
+/* header > img {
 	width: 7vw;
 	border-radius: 50%;
 	position: absolute;
 	left: 0.5vw;
 	top: 0.5vw;
-}
+} */
 
 p, legend {
 	font-size: 1.5vw;
@@ -341,7 +418,7 @@ input[type="file"] {
   text-decoration: none;
   display: inline-block;
 	font-size: 1.5vw;
-  width: 26.3%;
+  width: 26.9%;
   margin-top: 6px;
   margin-bottom: 6px;
   margin-right: 30px;
@@ -352,20 +429,55 @@ input[type="file"] {
 
 
 
-input[type="submit"], header > a, .custom-file-upload {
-  background-color: grey;
-  border: 2px solid grey;
+input[type="submit"], .custom-file-upload {
+  border : none
+  font-size: 1.3vw;
+  font-family :"Arial Black"
   color: white;
-	padding: 0.4vw 0.8vw;
+/*   padding: 15px 32px; */
   text-align: center;
   text-decoration: none;
   display: inline-block;
-	font-size: 1.5vw;
+/*   font-size: 16px; */
+  margin: 4px 2px;
+  cursor: pointer;
+  background-color: #72e5a6;
   
   margin-top: 6px;
   margin-bottom: 6px;
   margin-right: 30px;
   margin-left: 780px;
+  
+   padding: 10px 20px;
+	border-radius: 50px;
+	box-shadow: 0 3px 20px 0 #0000003b;
+  
+  
+  
+   
+	/* border-radius: 0.6vw; */
+}
+
+a, .custom-file-upload {
+  border : none
+  font-size: 1.3vw;
+  font-family :"Arial Black"
+  color: white;
+
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+
+  margin: 4px 2px;
+  cursor: pointer;
+  background-color: #72e5a6;
+  
+ 
+  
+   padding: 10px 20px;
+	border-radius: 50px;
+	box-shadow: 0 3px 20px 0 #0000003b;
+  
   
   
    
@@ -373,14 +485,53 @@ input[type="submit"], header > a, .custom-file-upload {
 }
 
 
-input[type="submit"]:hover, header > a:hover, .custom-file-upload:hover {
-  color: grey;
-  background-color: white;
+
+
+a:hover, .custom-file-upload:hover {
+  
+  font-size: 1.3vw;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  background-color: #7bf1f7;
+   padding: 10px 20px;
+	border-radius: 50px;
+	box-shadow: 0 3px 20px 0 #0000003b;
+  
+}
+
+
+
+
+
+input[type="submit"]:hover, .custom-file-upload:hover {
+  
+  font-size: 1.3vw;
+/*   font-family :"Arial Black" */
+/*   border: 2px solid black; */
+  color: white;
+/*   padding: 15px 32px; */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+/*   font-size: 16px; */
+  margin: 4px 2px;
+  cursor: pointer;
+  background-color: #7bf1f7;
+ 
   
   margin-top: 6px;
   margin-bottom: 6px;
   margin-right: 30px;
   margin-left: 780px;
+  
+   padding: 10px 20px;
+	border-radius: 50px;
+	box-shadow: 0 3px 20px 0 #0000003b;
+  
 }
 
 
@@ -388,7 +539,7 @@ input[type="submit"]:hover, header > a:hover, .custom-file-upload:hover {
 input[type="text"], input[type="email"], input[type="password"],input[type = "number"],input[type = "date"], textarea, select {
   
 	font-size: 1.5vw;
-	width: 25vw;
+	width: 26vw;
 	border: 5px solid white;
 	padding: 0.5vw;
   
@@ -426,7 +577,7 @@ input:valid,textarea: valid{
 
 
 select {
-	width: 26.3vw;
+	width: 26.2vw;
 	-webkit-appearance: none;
 	-webkit-border-radius: 0px;
 }

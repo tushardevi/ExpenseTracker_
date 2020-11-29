@@ -56,8 +56,8 @@ background: white;
 color: black;
 text-decoration: none;
 position: absolute;
-top: -80px;
-right: 200;
+left: 26px;
+top:100px;
 -webkit-transition: .5s ease-in-out;
 -moz-transition: .5s ease-in-out;
 -o-transition: .5s ease-in-out;
@@ -75,6 +75,8 @@ background: black;
 position: absolute;
 left: 26px;
 top:10px;
+right:1px;
+bottom:0px;
 -webkit-transform:rotate(45deg);
 -moz-transform:rotate(45deg);
 -o-transform:rotate(45deg);
@@ -92,6 +94,8 @@ background: black;
 position: absolute;
 left: 26px;
 top:10px;
+right:1px;
+bottom:0px;
 -webkit-transform:rotate(-45deg);
 -moz-transform:rotate(-45deg);
 -o-transform:rotate(-45deg);
@@ -114,4 +118,6 @@ right : 1000px;
 
 .lightbox-target:target a.lightbox-close {
 top: 0px;
+
+ 
 }
