@@ -1,0 +1,4 @@
+1)i need to add a Home button which takes the user to (secure page)
+
+2) the header is web responsive. Anallyse that feature and see if i can implement it in my other parts of the website (not so important)
+

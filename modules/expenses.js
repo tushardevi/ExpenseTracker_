@@ -13,6 +13,7 @@ const saltRounds = 10
  * ES6 module that handles registering accounts and logging in.
  */
 class Expenses {
+
 	/**
    * Create an account object
    * @param {String} [dbName=":memory:"] - The name of the database file to use.
@@ -40,18 +41,20 @@ class Expenses {
 	}
 
 
-	/*function which gets all the data and saves it into the expenses table in the website.db
-* it also checks if all fields are filled*/
+	/*function which gets all the data and saves it into the expenses table in
+  *the website.db it also checks if all fields are filled*/
+
 	async AddExpense(data) {
 		try{
 
-			/*check for validation, if there is a missing field then throw error*/
+			/*check for validation, if there is a
+			* missing field then throw error*/
 			for(const item in data) {
 				if(data[item].length === 0) throw new Error('missing field')
 			}
 
 
-			console.log(data)
+			//	console.log(data)
 
 			/* create new filename for the photo uploaded by the user, so it could be indentified later*/
 			let filename
@@ -60,11 +63,12 @@ class Expenses {
 				console.log(filename)
 				await fs.copy(data.filePath, `public/avatars/${filename}`)
 			} else{
-				filename = 'null' //set filename to s, so it could be identified to check which expense has a photo of value = null
+				filename = 'null' //set filename to null
 			}
 
 			/*add everything to the table*/
-			const sql = `INSERT INTO expenses(expense_date, category, label,descrip,amount,userid,filename) VALUES("${data.date}",\
+			const sql = `INSERT INTO expenses(expense_date, category, label,descrip,amount,userid,filename)\ 
+                   VALUES("${data.date}",\
                   "${data.category}", "${data.label}",\
                   "${data.descrip}",${data.amount},"${data.userid}","${filename}")`
 
@@ -87,7 +91,7 @@ class Expenses {
 and simplifies the datatime just to date in format DD/MM/YYYY*/
 	async all(userid) {
 
-		//	const sql = `SELECT expense_date, category, label, descrip, amount,img_url FROM expenses\
+
 		const sql = `SELECT expense_id,expense_date, category, label, descrip, amount,filename,userid FROM expenses\
                   WHERE userid = "${userid}" ORDER BY expense_date DESC;`
 
@@ -106,21 +110,21 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 	async close() {
 		await this.db.close()
 	}
-  
-  async get_expense(expense_id) {
 
-		
+	async getExpense(expenseID) {
+
+
 		const sql = `SELECT expense_id,expense_date, category, label, descrip, amount,filename,userid FROM expenses\
-                  WHERE expense_id = ${expense_id} ORDER BY expense_date DESC;`
-                  
+                  WHERE expense_id = ${expenseID} ORDER BY expense_date DESC;`
+
 
 		const expense = await this.db.get(sql)
-	
-    if(expense.filename === 'null') expense.filename = 'calculator.jpg'
-    const dateTime = new Date(expense.expense_date)
-    const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
-    expense.expense_date = date
-		
+
+		if(expense.filename === 'null') expense.filename = 'calculator.jpg'
+		const dateTime = new Date(expense.expense_date)
+		const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
+		expense.expense_date = date
+
 
 		return expense
 	}
@@ -129,23 +133,62 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 	async close() {
 		await this.db.close()
 	}
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+	/*funciton to check if the user inputs the right date. so that input_date <= current_date*/
+
+	async checkDate(expenses) {
+
+		// get the user date and change its format to DD/MM/YYYY
+		const dateTime = new Date(expenses.date)
+		const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
+
+		// get the current date and change its format to DD/MM/YYYY
+		const dateTime2 = new Date()
+		const currentDate = `${dateTime2.getDate()}/${dateTime2.getMonth()+1}/${dateTime2.getFullYear()}`
+
+
+		// check if user date is less or equal to current_date
+		try{
+			if(date > currentDate) throw new Error('Date must be less or equal to todays date ')
+
+
+		} catch(err) {
+			throw err
+		}
+
+
+		return true
+	}
+
+
+	/*function to get the total amount spent by a user*/
+
+	async getTotal(userid) {
+		let total = 0 // variable to store the total
+
+		// select only the amount of ALL expenses incurred by that user
+		try{
+			const sql = `SELECT amount FROM expenses\
+                  WHERE userid = "${userid}";`
+
+			const expenses = await this.db.all(sql)
+			//       console.log("BEFORE")
+			//       console.log(expenses)
+
+			// add all expenses one by one
+			for(const i in expenses) {
+				total = total + expenses[i]['amount']
+			}
+
+		} catch(err) {
+			console.log(err.message)
+		}
+
+
+		return total
+	}
+
 }
 
 export default Expenses
