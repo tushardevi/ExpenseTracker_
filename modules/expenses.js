@@ -149,13 +149,13 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 
 
 		// check if user date is less or equal to current_date
-		try{
-			if(date > currentDate) throw new Error('Date must be less or equal to todays date ')
+// 		try{
+		if(date > currentDate) throw new Error('Date must be less or equal to todays date ')
 
 
-		} catch(err) {
-			throw err
-		}
+// 		} catch(err) {
+// 			throw err
+// 		}
 
 
 		return true

@@ -62,6 +62,7 @@ router.post('/register', async ctx => {
 		ctx.redirect(`/?msg=new user "${ctx.request.body.user}" added, you need to log in`)
 
 	} catch(err) {
+    console.log("/register : ")
 		ctx.hbs.msg = err.message
 		ctx.hbs.body = ctx.request.body
 		console.log(ctx.hbs)
@@ -80,24 +81,24 @@ router.post('/register', async ctx => {
 /*route to retieve username and password from the texboxes in the "/login" in page*/
 router.post('/login', async ctx => {
 	const account = await new Accounts(dbName)
-
-	ctx.hbs.body = ctx.request.body
+  
 	try {
+    ctx.hbs.body = ctx.request.body
+    const id = await account.login(body.user, body.pass)
 		const body = ctx.request.body
-		const id = await account.login(body.user, body.pass)
+    ctx.session.authorised = true
+    ctx.session.user = body.user
+    ctx.session.userid = id
 
-		ctx.session.authorised = true
-		ctx.session.user = body.user
-		ctx.session.userid = id
+    
+    const referrer = body.referrer || '/secure'
+    return ctx.redirect(`${referrer}?msg=Welcome Back ${body.user}`)
 
-		const referrer = body.referrer || '/secure'
-		return ctx.redirect(`${referrer}?msg=Welcome Back ${body.user}`)
 	} catch(err) {
+    console.log(err.message)
 		ctx.hbs.msg = err.message
 		await ctx.render('index', ctx.hbs)
-	} finally {
-		account.close()
-	}
+	} 
 })
 
 

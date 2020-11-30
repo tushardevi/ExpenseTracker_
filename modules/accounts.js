@@ -56,6 +56,9 @@ class Accounts {
 	 * @returns {Boolean} returns true if credentials are valid
 	 */
 	async login(username, password) {
+    
+    
+    
 		let sql = `SELECT count(id) AS count FROM users WHERE user="${username}";`
 		const records = await this.db.get(sql)
 		if(!records.count) throw new Error(`username "${username}" not found`)
@@ -63,7 +66,14 @@ class Accounts {
 		const record = await this.db.get(sql)
 		const valid = await bcrypt.compare(password, record.pass)
 		if(valid === false) throw new Error(`invalid password for account "${username}"`)
+    
+  
+    
+    
 		return record.id
+    
+    
+    
 	}
 
 	async all() {
