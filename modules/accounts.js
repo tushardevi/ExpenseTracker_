@@ -38,20 +38,20 @@ class Accounts {
 			if(val.length === 0) throw new Error('missing field')
 		})
 		let sql = `SELECT COUNT(id) as records FROM users WHERE user="${user}";`
-    console.log("COUNT")
-    
+		console.log('COUNT')
+
 		const data = await this.db.get(sql)
-    console.log(data.records)
+		console.log(data.records)
 		if(data.records !== 0) throw new Error(`username "${user}" already in use`)
-    
+
 		sql = `SELECT COUNT(id) as records FROM users WHERE email="${email}";`
 		const emails = await this.db.get(sql)
 		if(emails.records !== 0) throw new Error(`email address "${email}" is already in use`)
-    
+
 		pass = await bcrypt.hash(pass, saltRounds)
 		sql = `INSERT INTO users(user, pass, email,admin) VALUES("${user}", "${pass}", "${email}", 0)`
 		await this.db.run(sql)
-    
+
 		return true
 	}
 
@@ -62,39 +62,29 @@ class Accounts {
 	 * @returns {Boolean} returns true if credentials are valid
 	 */
 	async login(username, password) {
-    console.log("LOG IN MATE")
-    
-    
+		console.log('LOG IN MATE')
+
+
 		let sql = `SELECT count(id) AS count FROM users WHERE user="${username}";`
 		const records = await this.db.get(sql)
 		if(!records.count) throw new Error(`username "${username}" not found`)
-    
+
 		sql = `SELECT id,pass,admin FROM users WHERE user = "${username}";`
 		const record = await this.db.get(sql)
 		const valid = await bcrypt.compare(password, record.pass)
 		if(valid === false) throw new Error(`invalid password for account "${username}"`)
-    
-    
-   
-    if(record.admin === 1){
-      return {id: record.id, isAdmin: -1};
-    }
-    
-    else{
-      return {id: record.id, isAdmin: 0};
-    }
-    
-    
-    
-    
-    
+
+
+		if(record.admin === 1) {
+			return {id: record.id, isAdmin: -1}
+		} else{
+			return {id: record.id, isAdmin: 0}
+		}
+
+
 	}
 
-  
-  
-  
-  
-  
+
 	async all() {
 		const sql = 'SELECT * FROM users'
 		const accounts = await this.db.all(sql)
