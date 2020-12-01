@@ -62,7 +62,7 @@ router.post('/register', async ctx => {
 		ctx.redirect(`/?msg=new user "${ctx.request.body.user}" added, you need to log in`)
 
 	} catch(err) {
-    console.log("/register : ")
+		console.log('/register : ')
 		ctx.hbs.msg = err.message
 		ctx.hbs.body = ctx.request.body
 		console.log(ctx.hbs)
@@ -72,84 +72,67 @@ router.post('/register', async ctx => {
 	}
 })
 
-// router.get('/login', async ctx => {
-// 	console.log(ctx.hbs)
-// 	await ctx.render('login', ctx.hbs)
-// })
-
 
 /*route to retieve username and password from the texboxes in the "/login" in page*/
+/*also it checks if the user is a manager or not*/
 router.post('/login', async ctx => {
+
+	// new object Accounts
 	const account = await new Accounts(dbName)
-
 	ctx.hbs.body = ctx.request.body
-  
-  let referrer = ''
-  
-  
+	let referrer = ''
 	try {
-    
-    console.log("CR777")
+
 		const body = ctx.request.body
+
+
+		// function returns an object with 2 values: ID and isAdmin
+		// (to check if the user is admin or not)
 		const info = await account.login(body.user, body.pass)
-   
-    console.log("ID")
-    
-    
-    
-
-    ctx.session.user = body.user
-    ctx.session.userid = info['id']
 
 
-    if(info['isAdmin'] < 0 ){
-    ctx.session.authorised = null
-    ctx.session.authorised_M = true
-    referrer = body.referrer || '/manager'
+		ctx.session.user = body.user
+		ctx.session.userid = info['id']
 
-      
-    }
-    
-    if(info['isAdmin'] >= 0){
-      
-       ctx.session.authorised_M = null
-       ctx.session.authorised = true
-     
+		// give it a check and change authorised to true or false according to who is logged in
+		if(info['isAdmin'] < 0 ) {
+			ctx.session.authorised = null
+			ctx.session.authorised_M = true
+			referrer = body.referrer || '/manager'
 
-       referrer = body.referrer || '/secure'
+		}
+
+		if(info['isAdmin'] >= 0) {
+
+			ctx.session.authorised_M = null
+			ctx.session.authorised = true
+			referrer = body.referrer || '/secure'
 
 
-    }
+		}
 
-    
-    
+		// redirect to an appropiate route
    	return ctx.redirect(`${referrer}?msg= Welcome ${body.user}`)
-    
-    
+
+
 	} catch(err) {
-    console.log(err.message)
 		ctx.hbs.msg = err.message
 		await ctx.render('index', ctx.hbs)
 	} finally {
 		account.close()
 	}
-  
-  
-  
-  
-  
-  
-  
+
+
 })
 
 
 /*route to log out the system */
 router.get('/logout', async ctx => {
 	ctx.session.authorised = null
-  ctx.session.authorised_M = null
+	ctx.session.authorised_M = null
 	delete ctx.session.user
 	delete ctx.session.userid
-  
+
 	ctx.redirect('/?msg=you are now logged out')
 })
 
