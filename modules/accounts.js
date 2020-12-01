@@ -75,20 +75,15 @@ class Accounts {
 		if(valid === false) throw new Error(`invalid password for account "${username}"`)
     
     
+   
+    if(record.admin === 1){
+      return {id: record.id, isAdmin: -1};
+    }
     
-//     console.log(`isAdmin : ${record.admin}`)
+    else{
+      return {id: record.id, isAdmin: 0};
+    }
     
-//     let flag = -1
-//     if(record.admin === 1){
-//       return flag
-//     }
-    
-//     else{
-//       return record.id
-//     }
-    
-    return record.id
-    	
     
     
     

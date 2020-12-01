@@ -6,21 +6,21 @@ const router = new Router({ prefix: '/manager' })
 import Expenses from '../modules/expenses.js'
 const dbName = 'website.db'
 
-async function checkAuth(ctx, next) {
-	console.log('secure router middleware')
+async function checkAuth2(ctx, next) {
+	console.log('manager router middleware')
 	console.log(ctx.hbs)
-	if(ctx.hbs.authorised_M !== true) return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
+	if(ctx.hbs.authorised_M !== true) return ctx.redirect('/login?msg=you need to log in&referrer=/manager')
 	await next()
 }
 
 
-router.use(checkAuth)
+router.use(checkAuth2)
 
 
 router.get('/', async ctx => {
   console.log("YOOOO ADMIN")
   try{
-    await ctx.render('index', ctx.hbs)
+    await ctx.render('register', ctx.hbs)
   }catch(err) {
 		console.log(err.message)
 		ctx.hbs.error = err.message

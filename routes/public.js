@@ -84,40 +84,50 @@ router.post('/login', async ctx => {
 
 	ctx.hbs.body = ctx.request.body
   
-  
+  let referrer = ''
   
   
 	try {
     
     console.log("CR777")
 		const body = ctx.request.body
-		const id = await account.login(body.user, body.pass)
+		const info = await account.login(body.user, body.pass)
+   
     console.log("ID")
-    console.log(id)
+    
+    
     
 
-//     ctx.session.authorised_M = false
-    ctx.session.authorised = true
     ctx.session.user = body.user
-    ctx.session.userid = id
+    ctx.session.userid = info['id']
 
-    const referrer = body.referrer || '/secure'
-    return ctx.redirect(`${referrer}?msg=Welcome Back ${body.user}`)
 
-  
-    
-//     if(id < 0 ){
-//     ctx.session.authorised = false
-//     ctx.session.authorised_M = true
-// // 		ctx.session.user = body.user
-// // 		ctx.session.userid = id
+    if(info['isAdmin'] < 0 ){
+    ctx.session.authorised = null
+    ctx.session.authorised_M = true
+    referrer = body.referrer || '/manager'
 
-// 		const referrer = body.referrer || '/manager'
-// 		return ctx.redirect(`${referrer}?msg= ADMIN AREA`)
       
-//     }
+    }
+    
+    if(info['isAdmin'] >= 0){
+      
+       ctx.session.authorised_M = null
+       ctx.session.authorised = true
+     
+
+       referrer = body.referrer || '/secure'
+
+
+    }
+
+    
+    
+   	return ctx.redirect(`${referrer}?msg= Welcome ${body.user}`)
+    
     
 	} catch(err) {
+    console.log(err.message)
 		ctx.hbs.msg = err.message
 		await ctx.render('index', ctx.hbs)
 	} finally {
@@ -136,9 +146,10 @@ router.post('/login', async ctx => {
 /*route to log out the system */
 router.get('/logout', async ctx => {
 	ctx.session.authorised = null
-  
+  ctx.session.authorised_M = null
 	delete ctx.session.user
 	delete ctx.session.userid
+  
 	ctx.redirect('/?msg=you are now logged out')
 })
 
