@@ -9,7 +9,7 @@ const dbName = 'website.db'
 async function checkAuth(ctx, next) {
 	console.log('secure router middleware')
 	console.log(ctx.hbs)
-	if(ctx.hbs.authorised_M !== true) return ctx.redirect('/login?msg=you need to log in&referrer=/manager')
+	if(ctx.hbs.authorised_M !== true) return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
 	await next()
 }
 
@@ -18,9 +18,9 @@ router.use(checkAuth)
 
 
 router.get('/', async ctx => {
-  
+  console.log("YOOOO ADMIN")
   try{
-    await ctx.render('register', ctx.hbs)
+    await ctx.render('index', ctx.hbs)
   }catch(err) {
 		console.log(err.message)
 		ctx.hbs.error = err.message

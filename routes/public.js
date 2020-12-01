@@ -81,30 +81,62 @@ router.post('/register', async ctx => {
 /*route to retieve username and password from the texboxes in the "/login" in page*/
 router.post('/login', async ctx => {
 	const account = await new Accounts(dbName)
+
+	ctx.hbs.body = ctx.request.body
+  
+  
+  
   
 	try {
-    ctx.hbs.body = ctx.request.body
-    const id = await account.login(body.user, body.pass)
+    
+    console.log("CR777")
 		const body = ctx.request.body
+		const id = await account.login(body.user, body.pass)
+    console.log("ID")
+    console.log(id)
+    
+
+//     ctx.session.authorised_M = false
     ctx.session.authorised = true
     ctx.session.user = body.user
     ctx.session.userid = id
 
-    
     const referrer = body.referrer || '/secure'
     return ctx.redirect(`${referrer}?msg=Welcome Back ${body.user}`)
 
+  
+    
+//     if(id < 0 ){
+//     ctx.session.authorised = false
+//     ctx.session.authorised_M = true
+// // 		ctx.session.user = body.user
+// // 		ctx.session.userid = id
+
+// 		const referrer = body.referrer || '/manager'
+// 		return ctx.redirect(`${referrer}?msg= ADMIN AREA`)
+      
+//     }
+    
 	} catch(err) {
-    console.log(err.message)
 		ctx.hbs.msg = err.message
 		await ctx.render('index', ctx.hbs)
-	} 
+	} finally {
+		account.close()
+	}
+  
+  
+  
+  
+  
+  
+  
 })
 
 
 /*route to log out the system */
 router.get('/logout', async ctx => {
 	ctx.session.authorised = null
+  
 	delete ctx.session.user
 	delete ctx.session.userid
 	ctx.redirect('/?msg=you are now logged out')
