@@ -54,6 +54,46 @@ class Accounts {
 
 		return true
 	}
+  
+  /**
+	 * registers a new manager
+	 * @param {String} user the chosen username
+	 * @param {String} pass the chosen password
+	 * @param {String} email the chosen email
+	 * @returns {Boolean} returns true if the new user has been added
+	 */
+	async registerManager(user, pass, email) {
+		Array.from(arguments).forEach( val => {
+			if(val.length === 0) throw new Error('missing field')
+		})
+		let sql = `SELECT COUNT(id) as records FROM users WHERE user="${user}";`
+		console.log('COUNT')
+
+		const data = await this.db.get(sql)
+		console.log(data.records)
+		if(data.records !== 0) throw new Error(`username "${user}" already in use`)
+
+		sql = `SELECT COUNT(id) as records FROM users WHERE email="${email}";`
+		const emails = await this.db.get(sql)
+		if(emails.records !== 0) throw new Error(`email address "${email}" is already in use`)
+
+		pass = await bcrypt.hash(pass, saltRounds)
+		sql = `INSERT INTO users(user, pass, email,admin) VALUES("${user}", "${pass}", "${email}", -1)`
+		await this.db.run(sql)
+
+		return true
+	}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 	/**
 	 * checks to see if a set of login credentials are valid
@@ -62,8 +102,6 @@ class Accounts {
 	 * @returns {Boolean} returns true if credentials are valid
 	 */
 	async login(username, password) {
-		console.log('LOG IN MATE')
-
 
 		let sql = `SELECT count(id) AS count FROM users WHERE user="${username}";`
 		const records = await this.db.get(sql)
@@ -75,7 +113,10 @@ class Accounts {
 		if(valid === false) throw new Error(`invalid password for account "${username}"`)
 
 
-		if(record.admin === 1) {
+    /*if the admin column has a value of 1 means is an admin and therefore return 2 values, its id
+     * and value of -1 or 0. -1 = admin and 0 = member*/
+    
+		if(record.admin === -1) {
 			return {id: record.id, isAdmin: -1}
 		} else{
 			return {id: record.id, isAdmin: 0}
@@ -83,7 +124,6 @@ class Accounts {
 
 
 	}
-
 
 	async all() {
 		const sql = 'SELECT * FROM users'

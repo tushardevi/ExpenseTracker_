@@ -9,7 +9,7 @@ const dbName = 'website.db'
 async function checkAuth2(ctx, next) {
 	console.log('manager router middleware')
 	console.log(ctx.hbs)
-	if(ctx.hbs.authorised_M !== true) return ctx.redirect('/login?msg=you need to log in&referrer=/manager')
+	if(ctx.hbs.authorisedManager !== true) return ctx.redirect('/login?msg=you need to log in&referrer=/manager')
 	await next()
 }
 

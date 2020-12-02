@@ -2,19 +2,54 @@
 import test from 'ava'
 import Accounts from '../modules/accounts.js'
 
-test('REGISTER : register and log in with a valid account', async test => {
+
+
+test('REGISTER : register and log in with a valid "manager" account', async test => {
 	test.plan(1)
 	const account = await new Accounts() // no database specified so runs in-memory
+  
 	try {
-		await account.register('doej', 'password', 'doej@gmail.com')
-	  const login = await account.login('doej', 'password')
-		test.is(login, true, 'unable to log in')
+		await account.registerManager('tushar', 'password', 'tushar@gmail.com')
+	  const login = await account.login('tushar', 'password')
+
+    
+    
+		test.is(login['isAdmin'],-1,'manager cannot log in')
+   
+	} catch(err) {
+    console.log(err.message)
+		test.fail('error thrown')
+	} finally {
+		account.close()
+	}
+})
+
+
+test('REGISTER : register and log in with a valid "member" account', async test => {
+	test.plan(1)
+	const account = await new Accounts() // no database specified so runs in-memory
+  
+	try {
+		await account.register('tushar', 'password', 'tushar@gmail.com')
+	  const login = await account.login('tushar', 'password')
+
+    
+    
+		test.is(login['isAdmin'],0,'member cannot log in')
+   
 	} catch(err) {
 		test.fail('error thrown')
 	} finally {
 		account.close()
 	}
 })
+
+
+
+
+
+
+
 
 test('REGISTER : register a duplicate username', async test => {
 	test.plan(1)
@@ -24,6 +59,7 @@ test('REGISTER : register a duplicate username', async test => {
 		await account.register('doej', 'password', 'doej@gmail.com')
 		test.fail('error not thrown')
 	} catch(err) {
+    console.log(err.message)
 		test.is(err.message, 'username "doej" already in use', 'incorrect error message')
 	} finally {
 		account.close()
@@ -110,3 +146,12 @@ test('LOGIN    : invalid password', async test => {
 		account.close()
 	}
 })
+
+
+
+
+
+
+
+
+
