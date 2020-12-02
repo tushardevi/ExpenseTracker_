@@ -126,6 +126,23 @@
  t
 }
  */
+/* 
+input + span {
+  padding-right: 300px;
+} */
+
+/* input:invalid+span:after {
+  position: absolute; content: '✖';
+/*   padding-left: 500px; */
+  margin-left: 50px;
+}
+
+input:valid+span:after {
+  position: absolute;
+  content: '✓';
+  padding-right: 50px;
+} */
+
 
 select > option{
   background-color: #72e5a6;

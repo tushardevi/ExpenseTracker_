@@ -45,12 +45,13 @@ class Expenses {
   *the website.db it also checks if all fields are filled*/
 
 	async AddExpense(data) {
+    console.log(data)
 		try{
 
 			/*check for validation, if there is a
 			* missing field then throw error*/
 			for(const item in data) {
-				if(data[item].length === 0) throw new Error('missing field')
+				if(data[item].length === 0) throw new Error('missing fields')
 			}
 
 
@@ -74,6 +75,8 @@ class Expenses {
 
 
 			await this.db.run(sql)
+      
+     
 
 		} catch(err) {
 			console.log('ERROR:!')
@@ -81,8 +84,8 @@ class Expenses {
 			throw err
 		}
 
-
-		return true
+   return true
+		
 	}
 
 
@@ -91,20 +94,30 @@ class Expenses {
 and simplifies the datatime just to date in format DD/MM/YYYY*/
 	async all(userid) {
 
-
-		const sql = `SELECT expense_id,expense_date, category, label, descrip, amount,filename,userid FROM expenses\
+    try{
+      
+      const sql = `SELECT expense_id,expense_date, category, label, descrip, amount,filename,userid FROM expenses\
                   WHERE userid = "${userid}" ORDER BY expense_date DESC;`
 
-		const expenses = await this.db.all(sql)
-		for(const index in expenses) {
-			if(expenses[index].filename === 'null') expenses[index].filename = 'calculator.jpg'
-			const dateTime = new Date(expenses[index].expense_date)
-			const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
-			expenses[index].expense_date = date
-		}
+      const expenses = await this.db.all(sql)
+      for(const index in expenses) {
+        if(expenses[index].filename === 'null') expenses[index].filename = 'calculator.jpg'
+        const dateTime = new Date(expenses[index].expense_date)
+        const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
+        expenses[index].expense_date = date
+      }
 
-		return expenses
+      return expenses
+
+      }
+    catch(err){
+      console.log(err)
+			throw err
+    }
+		
 	}
+  
+  
 
 
 	async close() {

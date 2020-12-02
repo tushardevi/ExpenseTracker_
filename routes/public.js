@@ -20,9 +20,13 @@ router.get('/', async ctx => {
 	//const accounts = await new Accounts(dbName)
 	try {
 
-		if(ctx.hbs.authorised) {
+		if(ctx.hbs.authorisedMember) {
 			return ctx.redirect('/secure')
 		}
+    if(ctx.hbs.authorisedManager) {
+			return ctx.redirect('/manager')
+		}
+    
 
 		await ctx.render('index', ctx.hbs)
 
@@ -96,16 +100,16 @@ router.post('/login', async ctx => {
 
 		// give it a check and change authorised to true or false according to who is logged in
 		if(info['isAdmin'] < 0 ) {
-			ctx.session.authorised = null
-			ctx.session.authorised_M = true
+			ctx.session.authorisedMember = null
+			ctx.session.authorisedManager = true
 			referrer = body.referrer || '/manager'
 
 		}
 
 		if(info['isAdmin'] >= 0) {
 
-			ctx.session.authorised_M = null
-			ctx.session.authorised = true
+			ctx.session.authorisedManager = null
+			ctx.session.authorisedMember = true
 			referrer = body.referrer || '/secure'
 
 
@@ -128,8 +132,8 @@ router.post('/login', async ctx => {
 
 /*route to log out the system */
 router.get('/logout', async ctx => {
-	ctx.session.authorised = null
-	ctx.session.authorised_M = null
+	ctx.session.authorisedMember = null
+	ctx.session.authorisedManager = null
 	delete ctx.session.user
 	delete ctx.session.userid
 
