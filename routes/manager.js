@@ -24,10 +24,10 @@ router.get('/', async ctx => {
 
 	try {
 		/*retrieving all expenses of a member*/
-		const records = await expenses.all(ctx.session.userid)
+		const records = await expenses.all()
 		ctx.hbs.records = records
 
-		await ctx.render('secure', ctx.hbs)
+		await ctx.render('managerIndex', ctx.hbs)
 
 	} catch(err) {
 		console.log(err.message)
