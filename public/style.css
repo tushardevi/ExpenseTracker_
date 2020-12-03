@@ -639,10 +639,10 @@ dd {
 
 table.timecard {
 	margin: auto;
-	width: 800px;
+	width: 600px;
 	border-collapse: collapse;
-	border: 1px solid red; /*for older IE*/
-	border-style: solid;
+	border: 1px solid #fff; /*for older IE*/
+	border-style: hidden;
 }
 
 table.timecard caption {
@@ -667,38 +667,15 @@ table.timecard thead th#thRegular, table.timecard thead th#thOvertime, table.tim
 	width: 20%;
 }
 
-table.timecard th{
-  padding: 5px;
-	border-width: 6px;
-	border-style: outset;
-	border-color: #ffffff transparent;
- 
-  text-shadow: 2px 2px #99cfff;
-  color: white;
-	font-size: large;
-	font-weight: bold;
-  
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Droid Sans,Helvetica Neue,sans-serif;
-} 
-table.timecard td {
-	padding: 5px;
-	border-width: 6px;
-	border-style: outset;
-	border-color: #ffffff transparent;
- background-color: #fde9d9;
-  text-shadow: 2px 2px white;
-  color: black;
-	font-size: large;
-	font-weight: bold;
-  
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Droid Sans,Helvetica Neue,sans-serif;
- 
-	
+table.timecard th, table.timecard td {
+	padding: 3px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #2828C8 #ccc;
 }
 
-
 table.timecard td {
-	text-align: center;
+	text-align: right;
 }
 
 table.timecard tbody th {
@@ -722,3 +699,31 @@ table.timecard tr.even {
 
 
 /**********************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
