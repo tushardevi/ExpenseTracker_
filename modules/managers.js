@@ -89,21 +89,26 @@ class Expenses {
 	/*function to retrieve data from the expenses table in website.db.
 * * This function also sets a placeholder image if an img url is not present
 and simplifies the datatime just to date in format DD/MM/YYYY*/
-	async all() {
+  
+	async allUsers() {
+    
+		try{
+			const sql = 'SELECT * FROM users;'
 
+	
+			const users = await this.db.all(sql)
+      
+					for(const index in users) {
+						if(users[index].filename === 'null') users[index].filename = 'calculator.jpg'
+					}
+			return users
 
-		const sql = 'SELECT expense_id,expense_date, category, label, descrip, amount,filename,userid FROM expenses\
-                  ORDER BY expense_date DESC;'
-
-		const expenses = await this.db.all(sql)
-		for(const index in expenses) {
-			if(expenses[index].filename === 'null') expenses[index].filename = 'calculator.jpg'
-			const dateTime = new Date(expenses[index].expense_date)
-			const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
-			expenses[index].expense_date = date
+		}catch(err) {
+			console.log(err.message)
+			throw err
 		}
 
-		return expenses
+
 	}
 
 

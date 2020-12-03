@@ -4,7 +4,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>managerIndex-page</title>
+		<title>manager-page</title>
 		<meta name="description" content="table to show all users">
 		<meta name="author" content="Mark Tyers">
     <link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
@@ -51,13 +51,14 @@
 <div id="main">
   
 <table class="timecard">
-  
-	<caption>Expenses</caption>
+
+	<caption>Members</caption>
 	<thead>
 		<tr>
 			<th id="firstName">firstName</th>
 			<th id="thRegular">LastName</th>
       <th id="amount">E-mail</th>
+      <th id="photo">Photo</th>
 <!-- 			<th id="thOvertime">Picture</th> -->
       
 			
@@ -69,8 +70,11 @@
     
 		<tr class="odd">
 			<td>{{this.firstName}}</td>
-			<td><a href="/secure/details/{{this.lastName}}"/>{{this.user}}</td>
+			<td>{{this.lastName}}</td>
       <td>{{this.email}}</td>
+      <td><a href="/manager">
+      <img src="{{host}}/users/{{this.filename}}" width="200" height="132">
+      </a></td>
       
     
        {{/each}}

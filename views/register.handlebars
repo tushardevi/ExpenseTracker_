@@ -4,34 +4,69 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Create an Account</title>
-		<meta name="description" content="form to add new books">
+		<title>register</title>
+		<meta name="description" content="form to add new expense">
 		<meta name="author" content="Mark Tyers">
-		<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
-		<script type="module" src="main.js"></script>
+     <link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
+
+    
+		
+    <style>
+         body {
+            background-image: url("https://wallpaperaccess.com/full/255999.jpg");
+            /* Full height */
+            height: 100%;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+         }
+      </style>
 	</head>
-	<body>
-		<header>
-		<h1>Create an Account</h1>
-		<a href="/">Home</a>
-		</header>
+  
+  
+<body>
+  
+ 
+   <header>
+    <div class="overlay">
+      <h1>Create Account</h1>
+      <a href="/">Home</a>
+    <br>
+      </div>
+  </header>
+    
+  
+  
 		{{#if msg}}
  			<aside>
 				<p class="msg">{{msg}}</p>
 			</aside>
 		{{/if}}
-		<main>
-      
-      
-		<form action="/register" enctype="multipart/form-data" method="post">
-      
-				<input type="text" name="user" placeholder="your preferred username (no spaces)" value="{{body.user}}">
-				<input type="password" name="pass" placeholder="your chosen password" value="{{body.pass}}">
-				<input type="email" name="email" placeholder="a valid email address" value="{{body.email}}">
-      
-			  <input type="submit" class = "button" value="Create">
-      
-		</form>
-		</main>
-	</body>
+  
+
+  
+  <main>
+    
+            <form class = "formCenter" form action= "/register" method = "post"  enctype = "multipart/form-data">
+                    <input class = "tbox" type="text" name = "firstName" value = "" placeholder = "First Name">
+                    <input class = "tbox" type="text" name = "lastName" value = "" placeholder = "Last Name">
+                    <input class = "tbox" type="text" name = "username" value = "" placeholder = "Username">
+                    <input class = "tbox" type="email" name="email" value = "" placeholder = "E-mail" >
+                    <input class = "tbox" type="password" name = "password" value = "" placeholder = "Password">
+                    <input class = "tbox" type="file" name="avatar" accept="image/*">
+                    <input class = "button" type="submit" value="Add">
+               
+              
+              
+            </form>
+          
+          
+     
+ 
+    
+    
+</main>
+</body>
 </html>

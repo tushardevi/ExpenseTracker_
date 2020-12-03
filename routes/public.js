@@ -58,12 +58,26 @@ router.get('/register', async ctx => {
 /*route to retieve data from the texboxes in the "/register" page and add it to the database
 * by using the object account*/
 router.post('/register', async ctx => {
+
 	const account = await new Accounts(dbName)
+
+
 	try {
+
+		if(ctx.request.files.avatar.name) {
+			ctx.request.body.filePath = ctx.request.files.avatar.path
+			ctx.request.body.fileName = ctx.request.files.avatar.name
+			ctx.request.body.fileType = ctx.request.files.avatar.type
+		}
+
+    
 		// call the functions in the module
-		await account.register(ctx.request.body.user, ctx.request.body.pass, ctx.request.body.email)
-		console.log(ctx.hbs)
-		ctx.redirect(`/?msg=new user "${ctx.request.body.user}" added, you need to log in`)
+		await account.register(ctx.request.body)
+		console.log('ALL DATA ')
+
+
+		ctx.redirect('/?msg= Account Created!')
+
 
 	} catch(err) {
 		console.log('/register : ')
@@ -71,9 +85,10 @@ router.post('/register', async ctx => {
 		ctx.hbs.body = ctx.request.body
 		console.log(ctx.hbs)
 		await ctx.render('register', ctx.hbs)
-	} finally {
-		account.close()
+
 	}
+
+
 })
 
 

@@ -19,12 +19,12 @@ router.use(checkAuth2)
 
 router.get('/', async ctx => {
 	//ctx.session.authorised = null
-	const expenses = await new Expenses(dbName)
+	const users = await new Expenses(dbName)
 
 
 	try {
 		/*retrieving all expenses of a member*/
-		const records = await expenses.all()
+		const records = await users.allUsers()
 		ctx.hbs.records = records
 
 		await ctx.render('managerIndex', ctx.hbs)
