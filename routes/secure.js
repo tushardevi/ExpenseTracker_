@@ -46,10 +46,6 @@ router.get('/', async ctx => {
 })
 
 
-/*opens up the add-expenses page*/
-router.get('/add-expenses',async ctx => {
-	await ctx.render('add2-expenses',ctx.hbs)
-})
 
 
 /*opens up the details page (different for each expense)*/
@@ -72,6 +68,13 @@ router.get('/details/:id',async ctx => {
 
 })
 
+/**
+ * opens up the add-expenses page*/
+router.get('/add-expenses',async ctx => {
+	await ctx.render('add2-expenses',ctx.hbs)
+})
+
+
 
 /*this post method will retieve all the necessary data from the add-expense
  * page and add it to the expenses table in website.db*/
@@ -89,13 +92,15 @@ router.post('/add-expenses', async ctx => {
 
 		// call the functions in the module
 		ctx.request.body.userid = ctx.session.userid
-
-		await expenses.checkDate(ctx.request.body)
-
-		await expenses.AddExpense(ctx.request.body)
-		console.log(ctx.hbs)
-
-		ctx.redirect('/secure?msg=new expense added')
+ 
+    await expenses.checkDate(ctx.request.body)
+    
+   
+    await expenses.AddExpense(ctx.request.body)
+    console.log(ctx.hbs)
+    ctx.redirect('/secure?msg=new expense added')
+   
+		
 
 	} catch(err) {
 		ctx.hbs.msg = err.message

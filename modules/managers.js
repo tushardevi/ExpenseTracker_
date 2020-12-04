@@ -91,12 +91,40 @@ class Expenses {
 and simplifies the datatime just to date in format DD/MM/YYYY*/
   
 	async allUsers() {
+   
+		try{
+      const sql = 'SELECT *FROM users'
+      
+// 			const sql = ' SELECT e.amount,a.firstName, a.lastName a.filename FROM expenses as e INNER JOIN users as a ON (e.userid = a.id);'
+			const users = await this.db.all(sql)
+      
+					for(const index in users) {
+						if(users[index].filename === 'null') users[index].filename = 'calculator.jpg'
+               
+            
+					}
+ 
+
+      
+      console.log(users)
+      
+			return users
+
+		}catch(err) {
+			console.log(err.message)
+			throw err
+		}
+
+
+	}
+  
+  async getUser(userid) {
     
 		try{
-			const sql = 'SELECT * FROM users;'
+			const sql = `SELECT * FROM users WHERE id = ${userid};`
 
 	
-			const users = await this.db.all(sql)
+			const users = await this.db.get(sql)
       
 					for(const index in users) {
 						if(users[index].filename === 'null') users[index].filename = 'calculator.jpg'
@@ -110,6 +138,7 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 
 
 	}
+
 
 
 	async close() {
@@ -140,32 +169,31 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 	}
 
 
-	/*funciton to check if the user inputs the right date. so that input_date <= current_date*/
+async all(userid) {
 
-	async checkDate(expenses) {
+    try{
+      
+      const sql = `SELECT expense_id,expense_date, category, label, descrip, amount,filename,userid FROM expenses\
+                  WHERE userid = "${userid}" ORDER BY expense_date DESC;`
 
-		// get the user date and change its format to DD/MM/YYYY
-		const dateTime = new Date(expenses.date)
-		const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
+      const expenses = await this.db.all(sql)
+      for(const index in expenses) {
+        if(expenses[index].filename === 'null') expenses[index].filename = 'calculator.jpg'
+        const dateTime = new Date(expenses[index].expense_date)
+        const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
+        expenses[index].expense_date = date
+      }
 
-		// get the current date and change its format to DD/MM/YYYY
-		const dateTime2 = new Date()
-		const currentDate = `${dateTime2.getDate()}/${dateTime2.getMonth()+1}/${dateTime2.getFullYear()}`
+      return expenses
 
-
-		// check if user date is less or equal to current_date
-		try{
-			if(date > currentDate) throw new Error('Date must be less or equal to todays date ')
-
-
-		} catch(err) {
+      }
+    catch(err){
+      console.log(err)
 			throw err
-		}
-
-
-		return true
+    }
+		
 	}
-
+  
 
 	/*function to get the total amount spent by a user*/
 
@@ -173,6 +201,8 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 		let total = 0 // variable to store the total
 
 		// select only the amount of ALL expenses incurred by that user
+  
+
 		try{
 			const sql = `SELECT amount FROM expenses\
                   WHERE userid = "${userid}";`
