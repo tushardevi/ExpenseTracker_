@@ -46,10 +46,6 @@ router.get('/', async ctx => {
 })
 
 
-/*opens up the add-expenses page*/
-router.get('/add-expenses',async ctx => {
-	await ctx.render('add2-expenses',ctx.hbs)
-})
 
 
 /*opens up the details page (different for each expense)*/
@@ -71,6 +67,13 @@ router.get('/details/:id',async ctx => {
 	}
 
 })
+
+/**
+ * opens up the add-expenses page*/
+router.get('/add-expenses',async ctx => {
+	await ctx.render('add2-expenses',ctx.hbs)
+})
+
 
 
 /*this post method will retieve all the necessary data from the add-expense
