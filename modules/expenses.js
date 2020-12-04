@@ -111,8 +111,8 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 
       }
     catch(err){
-      console.log(err)
-			throw err
+      console.log(err.message)
+			throw(err)
     }
 		
 	}
@@ -148,26 +148,26 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 	}
 
 
-	/*funciton to check if the user inputs the right date. so that input_date <= current_date*/
+	/*function to check if the user inputs the right date. so that input_date <= current_date*/
 
 	async checkDate(expenses) {
-
+  console.log("YOOOODD")
+    console.log(expenses.date)
 		// get the user date and change its format to DD/MM/YYYY
-		const dateTime = new Date(expenses.date)
-		const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
-
+		const date = new Date(expenses.date)
+		
 		// get the current date and change its format to DD/MM/YYYY
-		const dateTime2 = new Date()
-		const currentDate = `${dateTime2.getDate()}/${dateTime2.getMonth()+1}/${dateTime2.getFullYear()}`
-
-
+		const currentDate = new Date()
+    
+ 
 		// check if user date is less or equal to current_date
 		try{
-			if(date > currentDate) throw new Error('Date must be less or equal to todays date ')
-
+			if(date > currentDate ) throw new Error('Date must be less or equal to todays date ')
+       
 
 		} catch(err) {
-			throw err
+        console.log(err.message)
+			throw(err)
 		}
 
 

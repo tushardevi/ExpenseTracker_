@@ -4,9 +4,10 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>manager-page</title>
-		<meta name="description" content="table to show all users">
+		<title>allExpenses-{user.id}</title>
+		<meta name="description" content="form to add new books">
 		<meta name="author" content="Mark Tyers">
+    <link href="{{host}}/BigImg.css" type="text/css" rel="stylesheet" />
     <link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
     
 		<script type="module" src="main.js"></script>
@@ -23,14 +24,13 @@
           background-size: cover;
        }
     </style>
-    
 	</head>
 	<body>
     
     <header>
     <div class="overlay">
-      <h1>Summary</h1>
-<!--         <a  href="secure/add-expenses">All Users</a>  -->
+      <h1>{{user.firstName}}</h1>
+        <a  href="secure/add-expenses">Add expense</a> 
         <a href="/logout">Log out</a>  
     <br>
       </div>
@@ -51,14 +51,13 @@
 <div id="main">
   
 <table class="timecard">
-
-	<caption>Members</caption>
+  
+	<caption>Expenses</caption>
 	<thead>
 		<tr>
-			<th id="thRegular">First Name</th>
-			<th id="thRegular">Last Name</th>
-      <th id="amount">E-mail</th>
-      <th id="photo">Photo</th>
+			<th id="thDay">Date</th>
+			<th id="thRegular">Label</th>
+      <th id="amount">Amount</th>
 <!-- 			<th id="thOvertime">Picture</th> -->
       
 			
@@ -69,12 +68,9 @@
       {{#each records}}
     
 		<tr class="odd">
-			<td>{{this.firstName}}</td>
-			<td>{{this.lastName}}</td>
-      <td>{{this.email}}</td>
-      <td><a href="/manager/allExpenses/{{this.id}}">
-      <img src="{{host}}/users/{{this.filename}}" width="200" height="132">
-      </a></td>
+			<td>{{this.expense_date}}</td>
+			<td><a href="/manager/allExpenses/expense/{{this.expense_id}}"/>{{this.label}}</td>
+      <td>£ {{this.amount}}</td>
       
     
        {{/each}}

@@ -92,13 +92,15 @@ router.post('/add-expenses', async ctx => {
 
 		// call the functions in the module
 		ctx.request.body.userid = ctx.session.userid
-
-		await expenses.checkDate(ctx.request.body)
-
-		await expenses.AddExpense(ctx.request.body)
-		console.log(ctx.hbs)
-
-		ctx.redirect('/secure?msg=new expense added')
+ 
+    await expenses.checkDate(ctx.request.body)
+    
+   
+    await expenses.AddExpense(ctx.request.body)
+    console.log(ctx.hbs)
+    ctx.redirect('/secure?msg=new expense added')
+   
+		
 
 	} catch(err) {
 		ctx.hbs.msg = err.message
