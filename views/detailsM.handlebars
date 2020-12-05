@@ -64,13 +64,13 @@
       <td>{{expense.descrip}}</td>
       <td>£ {{expense.amount}}</td>
       
-     <td><a class="lightbox" href="#{{expense.filename}}">
-     <img src="{{host}}/avatars/{{expense.filename}}"/>
+     <td><a class="lightbox" href="#{{expense.filename}}" >
+     <img src="{{host}}/avatars/{{expense.filename}}" />
       </a> 
       
     <div class="lightbox-target" id="{{expense.filename}}">
-     <img src = "{{host}}/avatars/{{expense.filename}}"/>
-     <a class="lightbox-close" href="/manager/allExpenses/expense/{{expense.expense_id}}"></a>
+     <img src = "{{host}}/avatars/{{expense.filename}}" />
+     <a class="lightbox-close" href="/manager/approved/{{expense.expense_id}}" ></a>
       </div>
 		</tr>
        
@@ -80,6 +80,8 @@
 	
 </table>
 </div>
+     <a href="/manager/approved/{{expense.expense_id}}">APPROVE X</a>  
+
     
     
    

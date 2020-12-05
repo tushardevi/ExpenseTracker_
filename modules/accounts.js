@@ -41,7 +41,7 @@ class Accounts {
 
 	/**
 	 * registers a new user
-	 * @param {String} user the chosen username
+	 * @param {Object} the chosen username
 	 * @param {String} pass the chosen password
 	 * @param {String} email the chosen email
 	 * @returns {Boolean} returns true if the new user has been added

@@ -144,8 +144,8 @@ input:valid+span:after {
 } */
 
 
-select > option{
-  background-color: #72e5a6;
+select>option{
+  background-color: #b4ff8e;
 }
 select{
   font-family: "Arial Black";
@@ -350,7 +350,11 @@ p0 {
 
  main {
 	width: 100%;
-	margin-left: 3vw;
+/* 	margin-left: 3vw; */
+   margin: auto;
+   margin-top : 2em;
+   padding: 2em;
+   box-sizing:border-box
 	/*background-color: pink;*/
 } 
 
@@ -635,6 +639,7 @@ dd {
 	width: 780px;
 	padding: 20px;
 	margin: auto;
+  white-space:pre;
 }
 
 table.timecard {
@@ -643,6 +648,8 @@ table.timecard {
 	border-collapse: collapse;
 	border: 1px solid #fff; /*for older IE*/
 	border-style: hidden;
+  white-space:pre;
+  
 }
 
 table.timecard caption {
@@ -668,13 +675,18 @@ table.timecard thead th#thRegular, table.timecard thead th#thOvertime, table.tim
 }
 
 table.timecard th, table.timecard td {
+  
 	padding: 3px;
 	border-width: 1px;
 	border-style: solid;
 	border-color: #2828C8 #ccc;
 }
+ 
+/*   overflow:hidden; */
+/*   text-overflow:ellipsis; */
 
 table.timecard td {
+  
 	text-align: right;
 }
 
