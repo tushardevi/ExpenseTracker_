@@ -6,6 +6,7 @@ const router = new Router()
 router.use(bodyParser({multipart: true}))
 
 import Accounts from '../modules/accounts.js'
+import Expenses from '../modules/expenses.js'
 const dbName = 'website.db'
 
 
@@ -60,7 +61,7 @@ router.get('/register', async ctx => {
 router.post('/register', async ctx => {
 
 	const account = await new Accounts(dbName)
-
+  const expenses = await new Expenses(dbName)
 
 	try {
 
@@ -68,14 +69,16 @@ router.post('/register', async ctx => {
 			ctx.request.body.filePath = ctx.request.files.avatar.path
 			ctx.request.body.fileName = ctx.request.files.avatar.name
 			ctx.request.body.fileType = ctx.request.files.avatar.type
+      await expenses.checkFileFormat(ctx.request.body)
 		}
 
     
 		// call the functions in the module
+    
 		await account.register(ctx.request.body)
-		console.log('ALL DATA ')
+		
 
-
+    
 		ctx.redirect('/?msg= Account Created!')
 
 
@@ -93,7 +96,9 @@ router.post('/register', async ctx => {
 
 
 /*route to retieve username and password from the texboxes in the "/login" in page*/
-/*also it checks if the user is a manager or not*/
+/*also it checks if the user is a manager or not*
+ * 
+ * */
 router.post('/login', async ctx => {
 
 	// new object Accounts

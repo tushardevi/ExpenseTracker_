@@ -31,6 +31,7 @@ class Expenses {
           amount INTEGER,\
           userid INTEGER,\
           filename TEXT,\
+          status INTEGER,\
           FOREIGN KEY(userid) REFERENCES users(id) \
         );'
 
@@ -68,10 +69,10 @@ class Expenses {
 			}
 
 			/*add everything to the table*/
-			const sql = `INSERT INTO expenses(expense_date, category, label,descrip,amount,userid,filename)\ 
+			const sql = `INSERT INTO expenses(expense_date, category, label,descrip,amount,userid,filename,status)\ 
                    VALUES("${data.date}",\
                   "${data.category}", "${data.label}",\
-                  "${data.descrip}",${data.amount},"${data.userid}","${filename}")`
+                  "${data.descrip}",${data.amount},"${data.userid}","${filename}",0)`
 
 
 			await this.db.run(sql)
@@ -97,7 +98,7 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
     try{
       
       const sql = `SELECT expense_id,expense_date, category, label, descrip, amount,filename,userid FROM expenses\
-                  WHERE userid = "${userid}" ORDER BY expense_date DESC;`
+                  WHERE userid = "${userid}" AND status = 0 ORDER BY expense_date DESC;`
 
       const expenses = await this.db.all(sql)
       for(const index in expenses) {
@@ -128,7 +129,7 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 
 
 		const sql = `SELECT expense_id,expense_date, category, label, descrip, amount,filename,userid FROM expenses\
-                  WHERE expense_id = ${expenseID} ORDER BY expense_date DESC;`
+                  WHERE expense_id = ${expenseID} AND status = 0 ORDER BY expense_date DESC;`
 
 
 		const expense = await this.db.get(sql)
@@ -183,7 +184,7 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 		// select only the amount of ALL expenses incurred by that user
 		try{
 			const sql = `SELECT amount FROM expenses\
-                  WHERE userid = "${userid}";`
+                  WHERE userid = "${userid}" AND status = 0;`
 
 			const expenses = await this.db.all(sql)
 			//       console.log("BEFORE")
@@ -201,6 +202,35 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 
 		return total
 	}
+
+
+
+/**function which checks the file format when a user tries to upload a file
+ * @params {Object} multiple values :
+ * -- file path, file name and file type
+ * only intrested in the file type
+ * @returns {Boolean} 
+ * 
+ * */
+  
+  async checkFileFormat(fileInfo){
+ 
+   
+    try{
+    const type = fileInfo.fileType
+    const includes = type.includes("image")
+    if(!includes) throw new Error("Invalid file format")
+      
+    }catch(err){
+      console.log(err)
+      throw err
+    }
+    
+    
+    return true
+  }
+
+
 
 }
 

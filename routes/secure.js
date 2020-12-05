@@ -87,12 +87,17 @@ router.post('/add-expenses', async ctx => {
 			ctx.request.body.filePath = ctx.request.files.avatar.path
 			ctx.request.body.fileName = ctx.request.files.avatar.name
 			ctx.request.body.fileType = ctx.request.files.avatar.type
+      await expenses.checkFileFormat(ctx.request.body)
 		}
+    
+    console.log("fileonfo")
+    console.log(ctx.request.body)
 
 
 		// call the functions in the module
 		ctx.request.body.userid = ctx.session.userid
  
+  
     await expenses.checkDate(ctx.request.body)
     
    

@@ -31,6 +31,7 @@ class Expenses {
           amount INTEGER,\
           userid INTEGER,\
           filename TEXT,\
+          status INTEGER,\
           FOREIGN KEY(userid) REFERENCES users(id) \
         );'
 
@@ -67,10 +68,10 @@ class Expenses {
 			}
 
 			/*add everything to the table*/
-			const sql = `INSERT INTO expenses(expense_date, category, label,descrip,amount,userid,filename)\ 
+			const sql = `INSERT INTO expenses(expense_date, category, label,descrip,amount,userid,filename,status)\ 
                    VALUES("${data.date}",\
                   "${data.category}", "${data.label}",\
-                  "${data.descrip}",${data.amount},"${data.userid}","${filename}")`
+                  "${data.descrip}",${data.amount},"${data.userid}","${filename}",0)`
 
 
 			await this.db.run(sql)
@@ -149,7 +150,7 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 
 
 		const sql = `SELECT expense_id,expense_date, category, label, descrip, amount,filename,userid FROM expenses\
-                  WHERE expense_id = ${expenseID} ORDER BY expense_date DESC;`
+                  WHERE expense_id = ${expenseID} AND status = 0 ORDER BY expense_date DESC;`
 
 
 		const expense = await this.db.get(sql)
@@ -174,7 +175,7 @@ async all(userid) {
     try{
       
       const sql = `SELECT expense_id,expense_date, category, label, descrip, amount,filename,userid FROM expenses\
-                  WHERE userid = "${userid}" ORDER BY expense_date DESC;`
+                  WHERE userid = "${userid}" AND status = 0 ORDER BY expense_date DESC;`
 
       const expenses = await this.db.all(sql)
       for(const index in expenses) {
@@ -205,7 +206,7 @@ async all(userid) {
 
 		try{
 			const sql = `SELECT amount FROM expenses\
-                  WHERE userid = "${userid}";`
+                  WHERE userid = "${userid}" AND status = 0;`
 
 			const expenses = await this.db.all(sql)
 			//       console.log("BEFORE")
@@ -223,6 +224,20 @@ async all(userid) {
 
 		return total
 	}
+  
+  
+  
+  async approved(expense_id){
+    try{
+      const sql = `UPDATE expenses\
+                  SET status = 1 WHERE expense_id = ${expense_id};`
+      await this.db.run(sql)
+    }catch(err){
+      console.log(err.message)
+      throw err
+    }
+    return true
+  }
 
 }
 

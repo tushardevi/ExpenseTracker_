@@ -29,8 +29,8 @@ router.get('/', async ctx => {
 		/*retrieving all expenses of a member*/
 		let records = await users.allUsers()
     
-    console.log("BROOOOV")
-    console.log(records)
+//     console.log("BROOOOV")
+//     console.log(records)
 		ctx.hbs.records = records
 
 		await ctx.render('managerIndex', ctx.hbs)
@@ -78,15 +78,14 @@ router.get('/allExpenses/:id',async ctx => {
 /*opens up the details page (different for each expense)*/
 router.get('/allExpenses/expense/:exp_id',async ctx => {
   
-  const users = await new Expenses(dbName)
-  
+
 	const expenses = await new Expenses2(dbName)
 	try {
 	
     console.log(`record: ${ctx.params.exp_id}`)
 
 		/*retrieving one expense*/
-   const  expense = await expenses.getExpense(ctx.params.exp_id)
+    const  expense = await expenses.getExpense(ctx.params.exp_id)
 		ctx.hbs.expense = expense
 		ctx.hbs.id = ctx.params.exp_id
 
@@ -99,6 +98,38 @@ router.get('/allExpenses/expense/:exp_id',async ctx => {
 	}
 
 })
+
+
+
+/*route to approve expense */
+router.get('/approved/:expe_id', async ctx => {
+   
+   const expenses = await new Expenses2(dbName)
+   const status = await new Expenses(dbName)
+	try {
+	
+    console.log(`FUUU: ${ctx.params.expe_id}`)
+
+		/*retrieving one expense*/
+    const  expense = await expenses.getExpense(ctx.params.expe_id)
+    
+    await status.approved(ctx.params.expe_id)
+    
+// 		ctx.hbs.expense = expense
+// 		ctx.hbs.id = ctx.params.expe_id
+    
+    ctx.redirect(`/manager/allExpenses/${expense.userid}?msg=Expense Approved`)
+// 		await ctx.render('detailsM',ctx.hbs)
+    
+	} catch(err) {
+		console.log(err.message)
+		ctx.hbs.error = err.message
+		await ctx.render('error', ctx.hbs)
+	}
+
+})
+
+
 
 
 
