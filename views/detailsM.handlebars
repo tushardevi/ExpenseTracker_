@@ -4,7 +4,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Details-{{id}}</title>
+		<title>ExpenseDetails-{{id}}</title>
 		<meta name="description" content="form to add new books">
 		<meta name="author" content="Mark Tyers">
     <link href="{{host}}/BigImg.css" type="text/css" rel="stylesheet" />
@@ -70,7 +70,7 @@
       
     <div class="lightbox-target" id="{{expense.filename}}">
      <img src = "{{host}}/avatars/{{expense.filename}}" />
-     <a class="lightbox-close" href="/manager/approved/{{expense.expense_id}}" ></a>
+     <a class="lightbox-close" href="/manager/allExpenses/expense/{{expense.expense_id}}" ></a>
       </div>
 		</tr>
        
@@ -80,7 +80,7 @@
 	
 </table>
 </div>
-     <a href="/manager/approved/{{expense.expense_id}}">APPROVE X</a>  
+     <a href="/manager/approved/{{expense.expense_id}}">APPROVE</a>  
 
     
     

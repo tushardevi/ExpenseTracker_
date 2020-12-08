@@ -8,14 +8,19 @@ import mime from 'mime-types'
 
 const saltRounds = 10
 
+
 /**
- * Accounts
- * ES6 module that handles registering accounts and logging in.
- */
+   * Summary:
+   * This class is used to add new expenses,
+   * retrieve expenses' details ,
+   * get a total of all expenses,
+   * check for valid Date and file format.
+   * ES6 module
+   */
 class Expenses {
 
 	/**
-   * Create an account object
+   * Create an expense object
    * @param {String} [dbName=":memory:"] - The name of the database file to use.
    */
 	constructor(dbName = ':memory:') {
@@ -41,34 +46,46 @@ class Expenses {
 		})()
 	}
 
-
-	/*function which gets all the data and saves it into the expenses table in
-  *the website.db it also checks if all fields are filled*/
-
+	/**
+	 * Summary:
+	 * Function which gets all the data and saves it
+	 * into the expenses table,
+	 * also checks if all fields are filled.
+	 *
+	 * Dictionary is passed with the following data types:
+	 * @param {String} date
+	 * @param {String} category
+	 * @param {String} label
+	 * @param {String} description
+	 * @param {Integer} amount
+	 * @param {Integer} userid
+	 * @param {String} filename.
+	 *
+	 * @returns {Boolean} returns true if
+	 * the new expense is sucessfully added.
+	 */
 	async AddExpense(data) {
-    console.log(data)
+	
 		try{
 
-			/*check for validation, if there is a
-			* missing field then throw error*/
+
 			for(const item in data) {
 				if(data[item].length === 0) throw new Error('missing fields')
 			}
 
 
-			//	console.log(data)
+			//create new filename for the photo uploaded by the user, so it could be indentified later
 
-			/* create new filename for the photo uploaded by the user, so it could be indentified later*/
 			let filename
 			if(data.fileName) {
 				filename = `${Date.now()}.${mime.extension(data.fileType)}`
 				console.log(filename)
 				await fs.copy(data.filePath, `public/avatars/${filename}`)
 			} else{
-				filename = 'null' //set filename to null
+				filename = 'null' 
 			}
 
-			/*add everything to the table*/
+
 			const sql = `INSERT INTO expenses(expense_date, category, label,descrip,amount,userid,filename,status)\ 
                    VALUES("${data.date}",\
                   "${data.category}", "${data.label}",\
@@ -76,54 +93,74 @@ class Expenses {
 
 
 			await this.db.run(sql)
-      
-     
+
 
 		} catch(err) {
-			console.log('ERROR:!')
-			console.log(err)
+// 			console.log(err)
 			throw err
 		}
 
-   return true
-		
+		return true
+
 	}
 
 
-	/*function to retrieve data from the expenses table in website.db.
-* * This function also sets a placeholder image if an img url is not present
-and simplifies the datatime just to date in format DD/MM/YYYY*/
+	/**
+	 * Summary:
+	 * Function to retrieve data from the expenses' table
+   * This function also sets a placeholder image if
+   * an img url is not present,
+   * and changes dateTime's format to DD/MM/YYYY.
+	 *
+	 * Parameters:
+	 * @param {Integer} userid
+	 *
+	 * @returns {Struct} an array of dictionaries
+	 * with all the expense details.
+	 */
+
 	async all(userid) {
 
-    try{
-      
-      const sql = `SELECT expense_id,expense_date, category, label, descrip, amount,filename,userid FROM expenses\
+		try{
+
+			const sql = `SELECT expense_id,expense_date, category, label, descrip, amount,filename,userid FROM expenses\
                   WHERE userid = "${userid}" AND status = 0 ORDER BY expense_date DESC;`
 
-      const expenses = await this.db.all(sql)
-      for(const index in expenses) {
-        if(expenses[index].filename === 'null') expenses[index].filename = 'calculator.jpg'
-        const dateTime = new Date(expenses[index].expense_date)
-        const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
-        expenses[index].expense_date = date
-      }
+			const expenses = await this.db.all(sql)
+			for(const index in expenses) {
+				if(expenses[index].filename === 'null') expenses[index].filename = 'calculator.jpg'
+				const dateTime = new Date(expenses[index].expense_date)
+				const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
+				expenses[index].expense_date = date
+			}
 
-      return expenses
+			return expenses
 
-      }
-    catch(err){
-      console.log(err.message)
-			throw(err)
-    }
-		
+		} catch(err) {
+// 			console.log(err.message)
+			throw err
+		}
+
 	}
-  
-  
-
-
 	async close() {
 		await this.db.close()
 	}
+    
+
+	/**
+	 * Summary:
+	 * Function to retrieve a single expense
+	 * from the expenses' table
+   * This function also sets a placeholder image if
+   * an img url is not present,
+   * and chancges datatime format to DD/MM/YYYY.
+	 *
+	 * Parameters:
+	 * @param {Integer} Expense id
+	 *
+	 * @returns {Struct} a dictionary
+	 * with all the expense details.
+	 */
 
 	async getExpense(expenseID) {
 
@@ -149,26 +186,36 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 	}
 
 
-	/*function to check if the user inputs the right date. so that input_date <= current_date*/
-
+	/**
+	 * Summary:
+	 * Function to check if the user inputs the right date.
+   * so that input_date <= current_date.
+	 *
+	 * Parameters:
+	 * @param {Struct} all expense details
+	 * but only interested in key value called date.
+	 * @param {String} date.
+	 *
+	 * @returns {Boolean} return true if data is valid
+	 * otherwise throws error.
+	 */
 	async checkDate(expenses) {
-  console.log("YOOOODD")
-    console.log(expenses.date)
-		// get the user date and change its format to DD/MM/YYYY
+
+		// get the date given by the user
 		const date = new Date(expenses.date)
-		
-		// get the current date and change its format to DD/MM/YYYY
+
+		// get the current date
 		const currentDate = new Date()
-    
- 
-		// check if user date is less or equal to current_date
+
+
+		// perform a check
 		try{
-			if(date > currentDate ) throw new Error('Date must be less or equal to todays date ')
-       
+			if(date > currentDate ) throw new Error('Date must be less or equal to todays date')
+
 
 		} catch(err) {
-        console.log(err.message)
-			throw(err)
+// 			console.log(err.message)
+			throw err
 		}
 
 
@@ -176,19 +223,25 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 	}
 
 
-	/*function to get the total amount spent by a user*/
-
+	/**
+	 * Summary:
+	 * Function to get the total spent on expenses.
+	 *
+	 * Parameters:
+	 * @param {Integer} userid.
+	 *
+	 * @returns {Integer} returns total.
+	 */
 	async getTotal(userid) {
 		let total = 0 // variable to store the total
 
-		// select only the amount of ALL expenses incurred by that user
+		// select the amount spent in ALL expenses by the user
 		try{
 			const sql = `SELECT amount FROM expenses\
                   WHERE userid = "${userid}" AND status = 0;`
 
 			const expenses = await this.db.all(sql)
-			//       console.log("BEFORE")
-			//       console.log(expenses)
+
 
 			// add all expenses one by one
 			for(const i in expenses) {
@@ -196,7 +249,7 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 			}
 
 		} catch(err) {
-			console.log(err.message)
+// 			console.log(err.message)
 		}
 
 
@@ -204,31 +257,98 @@ and simplifies the datatime just to date in format DD/MM/YYYY*/
 	}
 
 
+	/**
+	 * Summary:
+	 * Function which checks the file format when a user tries to upload a file.
+	 *
+	 * Parameters:
+	 * @params {Object} multiple values :
+   * file path, file name and file type
+   * only intrested in:
+   * @params {String} filetype.
+   *
+   * @returns {Boolean} returns true of file is valid
+   * otherwise throws an error.
+	 */
 
-/**function which checks the file format when a user tries to upload a file
- * @params {Object} multiple values :
- * -- file path, file name and file type
- * only intrested in the file type
- * @returns {Boolean} 
- * 
- * */
+	async checkFileFormat(fileInfo) {
+
+
+		try{
+			const type = fileInfo.fileType
+			const includes = type.includes('image')
+			if(!includes) throw new Error('Invalid file format')
+
+		}catch(err) {
+// 			console.log(err)
+			throw err
+		}
+
+
+		return true
+	}
   
-  async checkFileFormat(fileInfo){
- 
-   
-    try{
-    const type = fileInfo.fileType
-    const includes = type.includes("image")
-    if(!includes) throw new Error("Invalid file format")
+  /**
+	 * Summary:
+	 * Function which approves
+	 * and hides expenses once they are approved.
+	 *
+	 * Parameters:
+	 * @params {Interger} Expense ID.
+	 *
+	 * @returns {Boolean} true if the expense is
+	 * successfully approved,
+	 * otherwise throws an error.
+	 */
+
+	async approve(expense_id) {
+		try{
+			const sql = `UPDATE expenses\
+                  SET status = 1 WHERE expense_id = ${expense_id};`
+			await this.db.run(sql)
       
-    }catch(err){
-      console.log(err)
-      throw err
-    }
-    
-    
-    return true
-  }
+      return true
+		}catch(err) {
+// 			console.log(err.message)
+			throw err
+		}
+		
+	}
+  
+  
+  	/**
+	 * Summary:
+	 * Function to get the total of all approved expenses.
+	 *
+	 * Parameters:
+	 * @param {Integer} userid.
+	 *
+	 * @returns {Integer} returns total.
+	 */
+	async getApprovedTotal() {
+		let total = 0
+
+		// select the amount spent in ALL expenses by the user
+		try{
+			const sql = `SELECT amount FROM expenses\
+                  WHERE status = 1;`
+
+			const expenses = await this.db.all(sql)
+
+
+			// add all expenses one by one
+			for(const i in expenses) {
+				total = total + expenses[i]['amount']
+			}
+
+		} catch(err) {
+// 			console.log(err.message)
+		}
+
+
+		return total
+	}
+
 
 
 
