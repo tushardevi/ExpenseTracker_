@@ -1,10 +1,22 @@
+/** @routes Secure */
+
 import Router from 'koa-router'
-
 const router = new Router({ prefix: '/secure' })
-
-/* import */
 import Expenses from '../modules/expenses.js'
 const dbName = 'website.db'
+
+/**
+	 * Summary:
+	 * This function checks for
+	 * authentication
+	 *
+	 * Parameters:
+	 * @param {Function} ctx middleware
+	 * @param {Function} next middleware
+	 *
+	 * @returns (redirects member to home page if
+	 * authentication is not valid.
+	 */
 
 async function checkAuth(ctx, next) {
 	console.log('secure router middleware')
@@ -17,23 +29,28 @@ async function checkAuth(ctx, next) {
 router.use(checkAuth)
 
 
+/**
+ * Summary :
+ * Secure Home page (for members only).
+ *
+ * @name Secure-Home.
+ * @route {GET} /secure
+ */
 router.get('/', async ctx => {
-	//ctx.session.authorised = null
+
 	const expenses = await new Expenses(dbName)
 
-
 	try {
-		/*retrieving all expenses of a member*/
+
+		//retrieving all expenses of a member
 		const records = await expenses.all(ctx.session.userid)
+
 		// get the total amount spent
 		const _total = await expenses.getTotal(ctx.session.userid)
-		console.log('TOTAL IS: ')
-		console.log(_total)
-		// console.log("ALL")
-		// console.log(records)
+
 		ctx.hbs.records = records
 		ctx.hbs.total = _total
-		console.log( ctx.hbs.total )
+
 		await ctx.render('secure', ctx.hbs)
 
 	} catch(err) {
@@ -46,9 +63,15 @@ router.get('/', async ctx => {
 })
 
 
-
-
-/*opens up the details page (different for each expense)*/
+/**
+ * Summary :
+ * Script to open up a page where the
+ * member can see the details of the
+ * expense clicked.
+ *
+ * @name ExpenseDetail.
+ * @route {GET} /secure/details/:id
+ */
 router.get('/details/:id',async ctx => {
 
 	const expenses = await new Expenses(dbName)
@@ -68,50 +91,57 @@ router.get('/details/:id',async ctx => {
 
 })
 
+
 /**
- * opens up the add-expenses page*/
+ * Summary :
+ * opens up the add-expenses page
+ *
+ * @name AddExpense.
+ * @route {GET} /secure/add-expenses
+ */
 router.get('/add-expenses',async ctx => {
-	await ctx.render('add2-expenses',ctx.hbs)
+	await ctx.render('add-expenses',ctx.hbs)
 })
 
 
-
-/*this post method will retieve all the necessary data from the add-expense
- * page and add it to the expenses table in website.db*/
+/**
+ * Summary :
+ * Script to retieve all the necessary data from the add-expense
+ * page and add it to the expenses table.
+ *
+ * @name AddExpense Script
+ * @route {POST} /add-expenses
+ */
 router.post('/add-expenses', async ctx => {
 	const expenses = await new Expenses(dbName)
 	try {
 
-
+		// if user uploaded a file then get additional file info
+		//and check if the format is valid.
 		if(ctx.request.files.avatar.name) {
 			ctx.request.body.filePath = ctx.request.files.avatar.path
 			ctx.request.body.fileName = ctx.request.files.avatar.name
 			ctx.request.body.fileType = ctx.request.files.avatar.type
-      await expenses.checkFileFormat(ctx.request.body)
+			await expenses.checkFileFormat(ctx.request.body)
 		}
-    
-    console.log("fileonfo")
-    console.log(ctx.request.body)
 
+		ctx.request.body.userid = ctx.session.userid
 
 		// call the functions in the module
-		ctx.request.body.userid = ctx.session.userid
- 
-  
-    await expenses.checkDate(ctx.request.body)
-    
-   
-    await expenses.AddExpense(ctx.request.body)
-    console.log(ctx.hbs)
-    ctx.redirect('/secure?msg=new expense added')
-   
-		
+		await expenses.checkDate(ctx.request.body)
+		await expenses.AddExpense(ctx.request.body)
+
+
+		console.log(ctx.hbs)
+
+		ctx.redirect('/secure?msg=new expense added')
 
 	} catch(err) {
 		ctx.hbs.msg = err.message
 		ctx.hbs.body = ctx.request.body
+		console.log(err.message)
 		console.log(ctx.hbs)
-		await ctx.render('add2-expenses', ctx.hbs)
+		await ctx.render('add-expenses', ctx.hbs)
 	} finally {
 		expenses.close()
 	}
