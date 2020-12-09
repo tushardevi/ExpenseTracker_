@@ -1,6 +1,6 @@
 
 import Koa from 'koa'
-import serve from 'koa-static'
+import server from 'koa-static'
 import views from 'koa-views'
 import session from 'koa-session'
 
@@ -31,7 +31,7 @@ async function getHandlebarData(ctx, next) {
 }
 
 
-app.use(serve('public'))
+app.use(server('public'))
 app.use(session(app))
 app.use(views('views', { extension: 'handlebars' }, {map: { handlebars: 'handlebars' }}))
 

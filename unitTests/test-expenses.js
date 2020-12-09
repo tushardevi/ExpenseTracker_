@@ -274,14 +274,16 @@ test('GET TOTAL  : check if gets the correct total', async test => {
 	const expenses = await new Expenses()
 	const details = {date: '2020-12-02' ,label: 'associates' , category: 'Food', descrip: 'meeting', amount: 394, userid: 1}
   const details2 = {date: '2020-10-14' ,label: 'Party' , category: 'Travel', descrip: 'hotel', amount: 100, userid: 1}
-  // right answer : 394 + 100 = 494
+  
   
 	try {
      await  expenses.AddExpense(details)
      await expenses.AddExpense(details2)
-  //retrieve expenses
+    
+     //retrieve expenses
 		 const total = await expenses.getTotal(details.userid)
      
+     // right answer : 394 + 100 = 494
 		 test.is(total, 494, 'incorrect total')
 
 	} catch(err) {

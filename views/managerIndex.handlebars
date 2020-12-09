@@ -47,12 +47,14 @@
 		{{/if}}
 		
      
-  <h1>Approved Total : £ {{total_}}</h1>
+  <h1>Amount paid out : £ {{total_}}</h1>
+    
 <div id="main">
   
 <table class="timecard">
 
 	<caption>Members</caption>
+  <p>Amount paid out : £ {{total_}} </p>
 	<thead>
 		<tr>
 			<th id="thRegular">First Name</th>
@@ -68,7 +70,7 @@
 	<tbody>
       {{#each records}}
     
-		<tr class="odd">
+		<tr class="even">
 			<td>{{this.firstName}}</td>
 			<td>{{this.lastName}}</td>
       <td>{{this.email}}</td>
@@ -78,7 +80,6 @@
       
     
        {{/each}}
-    
 	</tbody>
   
 	

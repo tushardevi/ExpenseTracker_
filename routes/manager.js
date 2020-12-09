@@ -3,7 +3,7 @@ import Router from 'koa-router'
 
 const router = new Router({ prefix: '/manager' })
 
-
+import Email from '../modules/sendEmail.js'
 import Accounts from '../modules/accounts.js'
 import Expenses from '../modules/expenses.js'
 const dbName = 'website.db'
@@ -147,15 +147,20 @@ router.get('/allExpenses/expense/:exp_id',async ctx => {
 router.get('/approved/:expe_id', async ctx => {
 
 	const expenses = await new Expenses(dbName)
+  const users = await new Accounts(dbName)
+  const email = await new Email()
+  
 	try {
 
 		console.log(`Record: ${ctx.params.expe_id}`)
 
-		//retrieving details of just one expense
+		//retrieving details of just one expense and the email address of user
 		const expense = await expenses.getExpense(ctx.params.expe_id)
-
-
+    const userInfo = await users.getUser(expense.userid)
+    const userEmail = userInfo.email
+    
 		await expenses.approve(ctx.params.expe_id)
+    await email.sendEmail(userEmail)
 
 		ctx.redirect(`/manager/allExpenses/${expense.userid}?msg=Expense Approved`)
 	} catch(err) {

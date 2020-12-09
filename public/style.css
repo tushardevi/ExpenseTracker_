@@ -70,6 +70,13 @@
   margin-left: 30px;
 }
 
+.centre_ > a:hover{
+  margin-top: 1px;
+  margin-bottom: 6px;
+  margin-right: 30px;
+  margin-left: 750px;
+}
+
 /*this is a transparent textbox*/
 
 .transbox {
@@ -660,10 +667,20 @@ table.timecard caption {
 	letter-spacing: .3em;
 }
 
+/* table.timecard {
+  background-color: #c62727;
+	color: #fff;
+	font-size: x-large;
+	font-weight: bold;
+	letter-spacing: .3em;
+}
+ */
+
 table.timecard thead th {
 	padding: 8px;
 	background-color: #ABE4FF;
-	font-size: large;
+	font-size: 20px;
+  
 }
 
 table.timecard thead th#thDay {
@@ -675,7 +692,7 @@ table.timecard thead th#thRegular, table.timecard thead th#thOvertime, table.tim
 }
 
 table.timecard th, table.timecard td {
-  
+  font-size: 20px;
 	padding: 3px;
 	border-width: 1px;
 	border-style: solid;
@@ -688,6 +705,12 @@ table.timecard th, table.timecard td {
 table.timecard td {
   
 	text-align: right;
+}
+
+
+table.timecard td:hover{
+  background-color : #ffaaf2;
+  
 }
 
 table.timecard tbody th {
@@ -703,39 +726,9 @@ table.timecard tfoot {
 }
 
 table.timecard tr.even {
-	background-color: #ABE4FF;
+	background-color: #ffddaa;
 }
 
 
-
-
-
 /**********************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
