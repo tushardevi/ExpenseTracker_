@@ -11,7 +11,8 @@ import mime from 'mime-types'
    * This class is used to add new expenses,
    * retrieve expenses' details ,
    * get a total of all expenses,
-   * check for valid Date and file format.
+   * check for valid Date,file format and finally
+   * approve expenses.
    * ES6 module
    */
 class Expenses {
@@ -50,13 +51,13 @@ class Expenses {
 	 * also checks if all fields are filled.
 	 *
 	 * Dictionary is passed with the following data types:
-	 * @param {String} date
-	 * @param {String} category
-	 * @param {String} label
-	 * @param {String} description
-	 * @param {Integer} amount
-	 * @param {Integer} userid
-	 * @param {String} filename.
+	 * @param {String} date Date
+	 * @param {String} category Category
+	 * @param {String} label Label
+	 * @param {String} description Description
+	 * @param {Integer} amount Amount spent
+	 * @param {Integer} userid User ID
+	 * @param {String} filename. Scanned receipt (if present)
 	 *
 	 * @returns {Boolean} returns true if
 	 * the new expense is sucessfully added.
@@ -99,7 +100,7 @@ class Expenses {
    * and changes dateTime's format to DD/MM/YYYY.
 	 *
 	 * Parameters:
-	 * @param {Integer} userid
+	 * @param {Integer} userid User ID
 	 *
 	 * @returns {Struct} an array of dictionaries
 	 * with all the expense details.
@@ -114,7 +115,7 @@ class Expenses {
 
 			const expenses = await this.db.all(sql)
 			for(const index in expenses) {
-				if(expenses[index].filename === 'null') expenses[index].filename = 'calculator.jpg'
+				if(expenses[index].filename === 'null') expenses[index].filename = 'place.jpg'
 				const dateTime = new Date(expenses[index].expense_date)
 				const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
 				expenses[index].expense_date = date
@@ -142,7 +143,7 @@ class Expenses {
    * and chancges datatime format to DD/MM/YYYY.
 	 *
 	 * Parameters:
-	 * @param {Integer} Expense id
+	 * @param {Integer} ExpenseID Expense ID
 	 *
 	 * @returns {Struct} a dictionary
 	 * with all the expense details.
@@ -157,7 +158,7 @@ class Expenses {
 
 		const expense = await this.db.get(sql)
 
-		if(expense.filename === 'null') expense.filename = 'calculator.jpg'
+		if(expense.filename === 'null') expense.filename = 'place.jpg'
 		const dateTime = new Date(expense.expense_date)
 		const date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
 		expense.expense_date = date
@@ -178,11 +179,9 @@ class Expenses {
    * so that input_date <= current_date.
 	 *
 	 * Parameters:
-	 * @param {Struct} all expense details
-	 * but only interested in key value called date.
-	 * @param {String} date.
+	 * @param {String} Date Date of expense
 	 *
-	 * @returns {Boolean} return true if data is valid
+	 * @returns {Boolean} return true if Date is valid
 	 * otherwise throws error.
 	 */
 	async checkDate(expenses) {
@@ -214,7 +213,7 @@ class Expenses {
 	 * Function to get the total spent on expenses.
 	 *
 	 * Parameters:
-	 * @param {Integer} userid.
+	 * @param {Integer} userid User ID.
 	 *
 	 * @returns {Integer} returns total.
 	 */
@@ -248,13 +247,15 @@ class Expenses {
 	 * Function which checks the file format when a user tries to upload a file.
 	 *
 	 * Parameters:
-	 * @params {Object} multiple values :
-   * file path, file name and file type
-   * only intrested in:
-   * @params {String} filetype.
+	 * @params {Struct} fileInfo All the file details like
+   * file path, file name and file type.
    *
-   * @returns {Boolean} returns true of file is valid
-   * otherwise throws an error.
+   * @params {String} fileName Name of file.
+   * @params{String} filePath Path address.
+   * @params {String} fileType Type of file.
+   *
+   *
+   * @returns {Boolean} returns true if file type is valid
 	 */
 
 	async checkFileFormat(fileInfo) {
@@ -280,7 +281,7 @@ class Expenses {
 	 * and hides expenses once they are approved.
 	 *
 	 * Parameters:
-	 * @params {Interger} Expense ID.
+	 * @params {Interger} ExpenseID Expense ID.
 	 *
 	 * @returns {Boolean} true if the expense is
 	 * successfully approved,
@@ -307,9 +308,9 @@ class Expenses {
 	 * Function to get the total of all approved expenses.
 	 *
 	 * Parameters:
-	 * @param {Integer} userid.
+	 * @param {Integer} userid the User ID.
 	 *
-	 * @returns {Integer} returns total.
+	 * @returns {Integer} returns the total of all approved expenses.
 	 */
 	async getApprovedTotal() {
 		let total = 0

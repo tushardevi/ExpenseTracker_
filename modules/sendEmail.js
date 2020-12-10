@@ -21,8 +21,8 @@ class Email {
 	 * that I created.
 	 *
 	 *
-	 * @param {String} E-mail address
-   * @param {Integer} Expense ID
+	 * @param {String} receiver The email address of the person receiving the email
+   * @param {Integer} ExpenseID Expense ID needed so it can be used in the body of the email
 	 * @returns {Boolean} returns true
 	 * when an email is sucessfully sent.
 	 */

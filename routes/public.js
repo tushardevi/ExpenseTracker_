@@ -167,7 +167,7 @@ router.get('/logout', async ctx => {
 	delete ctx.session.user
 	delete ctx.session.userid
 
-	ctx.redirect('/?msg=you are now logged out')
+	ctx.redirect('/')
 })
 
 export default router
