@@ -51,7 +51,7 @@ router.get('/', async ctx => {
 		const total = await expenses.getApprovedTotal()
 		ctx.hbs.total_ = total
 		ctx.hbs.records = records
-
+		console.log(records)
 		await ctx.render('managerIndex', ctx.hbs)
 
 	} catch(err) {
@@ -83,7 +83,7 @@ router.get('/allExpenses/:id',async ctx => {
 
 		/*retrieving one expense*/
 		const records = await expenses.all(ctx.params.id)
-		ctx.hbs.records = records
+
 
 		//getting the total
 		const _total = await expenses.getTotal(ctx.params.id)

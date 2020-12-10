@@ -203,12 +203,18 @@ aside {
 .msg {
 	position: fixed;
 	top: 2em;
-	border: 1px solid red;
-	font-weight: bold;
-	background-color: white;
-	color: red;
+	border: 1px solid #ff0000;
+  border-width: 6px;
+  border-style: outset;
+	font-weight: bold; 
+	background-color: black;
+	color: #ffd168;
 	padding: 1em;
 	margin: 2em;
+}
+.msg:active{
+  	border: 1px solid #00ffdd;
+   border-width: 6px;
 }
 
 header {

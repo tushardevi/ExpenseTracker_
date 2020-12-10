@@ -1,7 +1,3 @@
-/**
- * @unitTest
- * @module tested : expenses.js
- */
 
 import test from 'ava'
 import Expenses from '../modules/expenses.js'

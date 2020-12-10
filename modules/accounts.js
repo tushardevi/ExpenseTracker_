@@ -1,5 +1,5 @@
 
-/@module Acounts */
+/**@module Acounts */
 
 import bcrypt from 'bcrypt-promise'
 import sqlite from 'sqlite-async'
@@ -55,12 +55,12 @@ class Accounts {
 	 * details.
 	 * Parameters:
 	 *
-	 * @param {String} first name
-	 * @param {String} last name
-	 * @param {String} username
-	 * @param {String} email
-	 * @param {String} password
-	 * @param {String} filename (if present)
+	 * @param {String} firstName First name
+	 * @param {String} lastName  Last name
+	 * @param {String} username  Username
+	 * @param {String} email     E-mail Address
+	 * @param {String} password  Password
+	 * @param {String} filename  Profile picture name
 	 *
 	 * @returns {Boolean} true if the member is
 	 * successfully registered.
@@ -121,8 +121,8 @@ class Accounts {
 	 * it also checks for managers accounts.
 	 *
 	 * Parameters:
-	 * @param {String} password
-	 * @param {String} username
+	 * @param {String} password Password
+	 * @param {String} username Username
 	 * @returns {Struct} returns a dictionary with
 	 * different values, depending on who logged in;
 	 * member or manager.
@@ -171,7 +171,7 @@ class Accounts {
 			const users = await this.db.all(sql)
 
 			for(const index in users) {
-				if(users[index].filename === 'null') users[index].filename = 'calculator.jpg'
+				if(users[index].filename === 'null') users[index].filename = 'placeholder.jpg'
 
 			}
 
@@ -192,7 +192,7 @@ class Accounts {
    * an img url is not present,
 	 *
 	 * Parameters:
-	 * @params {Interger} userid
+	 * @params {Interger} userid User ID
 	 *
 	 * @returns {Struct} a dictionary
 	 * with user's details.
