@@ -68,6 +68,7 @@ class Accounts {
 
 	async register(data) {
 		try{
+
 			for(const item in data) {
 				if(data[item].length === 0) throw new Error('missing fields')
 			}
@@ -89,14 +90,15 @@ class Accounts {
 			// checks if e-mail exists in DB
 			sql = `SELECT COUNT(id) as records FROM users WHERE email="${data.email}";`
 			const emails = await this.db.get(sql)
-			if(emails.records !== 0) throw new Error(`email address "${data.email}" is already in use`)
+			if(emails.records !== 0) throw new Error(`email address "${data.email}" is in use`)
 
 			//encrypt the password
 	    data.password = await bcrypt.hash(data.password, saltRounds)
 
 			//save all details into users table
 			sql = `INSERT INTO users(firstName , lastName,  username ,email,password,filename,admin)
-    VALUES("${data.firstName}","${data.lastName}","${data.username }","${data.email}","${data.password}","${filename}", 0)`
+    VALUES("${data.firstName}","${data.lastName}","${data.username }",
+          "${data.email}","${data.password}","${filename}", 0)`
 
 
 			await this.db.run(sql)
@@ -105,8 +107,7 @@ class Accounts {
 			return true
 
 		}catch(err) {
-			
-// 			console.log(err.message)
+			// 			console.log(err.message)
 			throw err
 		}
 
@@ -147,12 +148,10 @@ class Accounts {
 			return {id: record.id, isAdmin: 0}
 		}
 
-		return false
-
 
 	}
-  
-  /**
+
+	/**
 	 * Summary:
 	 * Function which retrieves all users' details,
    * this function also sets a placeholder image if
@@ -168,7 +167,7 @@ class Accounts {
 	async allUsers() {
 
 		try{
-			const sql = `SELECT * FROM users`
+			const sql = 'SELECT * FROM users'
 			const users = await this.db.all(sql)
 
 			for(const index in users) {
@@ -179,14 +178,14 @@ class Accounts {
 			return users
 
 		}catch(err) {
-// 			console.log(err.message)
+			// 			console.log(err.message)
 			throw err
 		}
 
 	}
-  
-  
-  /**
+
+
+	/**
 	 * Summary:
 	 * Function to retrieve just one user details
    * this function also sets a placeholder image if
@@ -212,13 +211,12 @@ class Accounts {
 			return users
 
 		}catch(err) {
-// 			console.log(err.message)
+			// 			console.log(err.message)
 			throw err
 		}
 
 
 	}
-  
 
 
 	async close() {

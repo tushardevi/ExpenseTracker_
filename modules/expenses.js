@@ -1,13 +1,10 @@
 
 /** @module Expenses */
 
-import bcrypt from 'bcrypt-promise'
+
 import sqlite from 'sqlite-async'
 import fs from 'fs-extra'
 import mime from 'mime-types'
-
-const saltRounds = 10
-
 
 /**
    * Summary:
@@ -65,41 +62,30 @@ class Expenses {
 	 * the new expense is sucessfully added.
 	 */
 	async AddExpense(data) {
-	
 		try{
-
-
 			for(const item in data) {
 				if(data[item].length === 0) throw new Error('missing fields')
 			}
 
-
 			//create new filename for the photo uploaded by the user, so it could be indentified later
-
 			let filename
 			if(data.fileName) {
 				filename = `${Date.now()}.${mime.extension(data.fileType)}`
 				console.log(filename)
 				await fs.copy(data.filePath, `public/avatars/${filename}`)
 			} else{
-				filename = 'null' 
+				filename = 'null'
 			}
-
 
 			const sql = `INSERT INTO expenses(expense_date, category, label,descrip,amount,userid,filename,status)\ 
                    VALUES("${data.date}",\
                   "${data.category}", "${data.label}",\
                   "${data.descrip}",${data.amount},"${data.userid}","${filename}",0)`
-
-
 			await this.db.run(sql)
 
-
 		} catch(err) {
-// 			console.log(err)
 			throw err
 		}
-
 		return true
 
 	}
@@ -137,7 +123,7 @@ class Expenses {
 			return expenses
 
 		} catch(err) {
-// 			console.log(err.message)
+			// 			console.log(err.message)
 			throw err
 		}
 
@@ -145,7 +131,7 @@ class Expenses {
 	async close() {
 		await this.db.close()
 	}
-    
+
 
 	/**
 	 * Summary:
@@ -214,7 +200,7 @@ class Expenses {
 
 
 		} catch(err) {
-// 			console.log(err.message)
+			// 			console.log(err.message)
 			throw err
 		}
 
@@ -249,7 +235,7 @@ class Expenses {
 			}
 
 		} catch(err) {
-// 			console.log(err.message)
+			// 			console.log(err.message)
 		}
 
 
@@ -280,15 +266,15 @@ class Expenses {
 			if(!includes) throw new Error('Invalid file format')
 
 		}catch(err) {
-// 			console.log(err)
+			// 			console.log(err)
 			throw err
 		}
 
 
 		return true
 	}
-  
-  /**
+
+	/**
 	 * Summary:
 	 * Function which approves
 	 * and hides expenses once they are approved.
@@ -301,21 +287,21 @@ class Expenses {
 	 * otherwise throws an error.
 	 */
 
-	async approve(expense_id) {
+	async approve(expenseID) {
 		try{
 			const sql = `UPDATE expenses\
-                  SET status = 1 WHERE expense_id = ${expense_id};`
+                  SET status = 1 WHERE expense_id = ${expenseID};`
 			await this.db.run(sql)
-      
-      return true
+
+			return true
 		}catch(err) {
-// 			console.log(err.message)
+			// 			console.log(err.message)
 			throw err
 		}
-		
+
 	}
-  
-  
+
+
   	/**
 	 * Summary:
 	 * Function to get the total of all approved expenses.
@@ -330,8 +316,8 @@ class Expenses {
 
 		// select the amount spent in ALL expenses by the user
 		try{
-			const sql = `SELECT amount FROM expenses\
-                  WHERE status = 1;`
+			const sql = 'SELECT amount FROM expenses\
+                  WHERE status = 1;'
 
 			const expenses = await this.db.all(sql)
 
@@ -342,14 +328,12 @@ class Expenses {
 			}
 
 		} catch(err) {
-// 			console.log(err.message)
+			// 			console.log(err.message)
 		}
 
 
 		return total
 	}
-
-
 
 
 }

@@ -75,7 +75,7 @@ router.post('/register', async ctx => {
 			await expenses.checkFileFormat(ctx.request.body)
 		}
 
-   
+
 		// register the member.
 		await account.register(ctx.request.body)
 
