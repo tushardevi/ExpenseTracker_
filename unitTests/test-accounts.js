@@ -35,7 +35,7 @@ test('LOG IN : log in with a valid manager account', async test => {
 	//as a manager account.
 
 	try {
-	  const login = await account.login('manager','1')
+	  const login = await account.login('manager1','p455w0rd')
 
 		test.is(login['isAdmin'],-1,'manager cannot log in')
 

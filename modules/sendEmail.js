@@ -26,7 +26,7 @@ class Email {
 	 * @returns {Boolean} returns true
 	 * when an email is sucessfully sent.
 	 */
-	async sendEmail(receiver,expenseID) {
+	async sendEmail(receiver,expenseID,amount) {
 
 		const transporter = nodemailer.createTransport({
 			service: 'gmail',
@@ -37,7 +37,9 @@ class Email {
 
 		})
 
-		const msg = `Expense ID : ${expenseID} has been successfully approved`
+
+		const msg = `Expense ID : ${expenseID} has been successfully approved, You will
+                 get £${amount}`
 
 		const mailOtions = {
 			from: 'javascript3211@gmail.com',
