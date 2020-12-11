@@ -167,7 +167,7 @@ class Accounts {
 	async allUsers() {
 
 		try{
-			const sql = 'SELECT * FROM users'
+			const sql = 'SELECT * FROM users WHERE admin = 0'
 			const users = await this.db.all(sql)
 
 			for(const index in users) {

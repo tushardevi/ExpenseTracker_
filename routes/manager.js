@@ -48,6 +48,7 @@ router.get('/', async ctx => {
 
 		//retrieving all expenses of a member
 		const records = await users.allUsers()
+
 		const total = await expenses.getApprovedTotal()
 		ctx.hbs.total_ = total
 		ctx.hbs.records = records
@@ -81,9 +82,9 @@ router.get('/allExpenses/:id',async ctx => {
 	try {
 		console.log(`userid is : ${ctx.params.id}`)
 
-		/*retrieving one expense*/
+		//retrieving all expenses
 		const records = await expenses.all(ctx.params.id)
-
+		ctx.hbs.records = records
 
 		//getting the total
 		const _total = await expenses.getTotal(ctx.params.id)
@@ -160,7 +161,7 @@ router.get('/approved/:expe_id', async ctx => {
 		const userEmail = userInfo.email
 
 		await expenses.approve(ctx.params.expe_id)
-		await email.sendEmail(userEmail,expense.expense_id)
+		await email.sendEmail(userEmail,expense.expense_id,expense.amount)
 
 		ctx.redirect(`/manager/allExpenses/${expense.userid}?msg=Expense Approved`)
 	} catch(err) {
